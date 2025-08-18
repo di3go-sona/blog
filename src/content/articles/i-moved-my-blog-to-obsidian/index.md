@@ -12,22 +12,16 @@ I started blogging around 3 years ago, at that time I was using Notion as my mai
 As I am a deep believer of 'less is more', it was a natural decision to use Notion as my blogging platform as well, and I basically had 5 options:
 
 - Get the Notion Pro plan and directly build the website using built in functionality
-	
 	✅ PROS: Quick
-	
 	🛑 CONS: Monthly Fee, Limited customization options
 
 - Keep the Notion Free plan and use existing services to turn it into a website
   There are lots of services to do this like [Potion.so](https://potion.so) and [Super.so](https://super.so) but basically they all work in the same way
-	
 	✅ PROS:  Quick, Nice designs, cheaper
-	
 	🛑 CONS: Monthly Fee, Limited customization options, another dependency in the pipeline
 
 - Do something on my own using open-source components
-	
 	✅ PROS:  Free, Full customization
-	
 	🛑 CONS: Time consuming
 
 
@@ -36,6 +30,7 @@ In the end I decided to go with the last option, thinking to start small and imp
 - [react-notion-x](https://github.com/NotionX/react-notion-x) to Render notion into html 
 - [nextjs-notion-starter-kit](https://github.com/transitive-bullshit/https://github.com/transitive-bullshit/nextjs-notion-starter-kit) initial code for the blog server
 - [Vercel](https://vercel.com/di3gosonas-projects/blog) to build, deploy and host the website
+
 With minimal tweaks to the initial designed I obtained this nice ( at least for my standard ) result
 
 ![blog_notion.png](./blog_notion.png)
