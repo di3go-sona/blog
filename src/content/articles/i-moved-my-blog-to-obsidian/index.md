@@ -12,15 +12,24 @@ I started blogging around 3 years ago, at that time I was using Notion as my mai
 As I am a deep believer of 'less is more', it was a natural decision to use Notion as my blogging platform as well, and I basically had 5 options:
 
 - Get the Notion Pro plan and directly build the website using built in functionality
+	
 	✅ PROS: Quick
+	
 	🛑 CONS: Monthly Fee, Limited customization options
+
 - Keep the Notion Free plan and use existing services to turn it into a website
   There are lots of services to do this like [Potion.so](https://potion.so) and [Super.so](https://super.so) but basically they all work in the same way
+	
 	✅ PROS:  Quick, Nice designs, cheaper
+	
 	🛑 CONS: Monthly Fee, Limited customization options, another dependency in the pipeline
+
 - Do something on my own using open-source components
+	
 	✅ PROS:  Free, Full customization
+	
 	🛑 CONS: Time consuming
+
 
 In the end I decided to go with the last option, thinking to start small and improve along the way. I used:
 - [Notion](https://notion.com) as my articles Database
@@ -32,13 +41,18 @@ With minimal tweaks to the initial designed I obtained this nice ( at least for 
 ![blog_notion.png](./blog_notion.png)
 
 This worked nice for a few years, until recently Notion has been doing many breaking changes and the mantainer of [react-notion-x](https://github.com/NotionX/react-notion-x) wasn't catching up with that, I realized a section of my website had just disappeared for a rendering error.
-I don't want to blame the mantainer, actually the opposite, Travis Fisher made an amazing work with this toolkit that served me well for a few years, but unfortunately having to build a software adapting to an ever changing interface can easily become a rabbit hole
-Additionally the loading speed was good but not excellent as pages were re-fetched and rendered every time
+
+I don't want to blame the mantainer, actually the opposite, Travis Fisher made an amazing work with this toolkit that served me well for a few years, but unfortunately having to build a software adapting to an ever changing interface can easily become a rabbit hole.
+
+Additionally the loading speed was good but not excellent as pages were re-fetched and rendered every time.
+
 Thirdly I found it very hard to do small changes into the UI as it's a very complex recursive renderer, in which blocks could contain other blocks, or widgets or inlines
 
 All these limitations made me decide to try and go for another approach. As I am trying to self-host the tools I use, and go for a more minimal and open-source approach to my toolbelt I decided to move fron [Notion](https://notion.com) to [Obsidian](https://obsidian.md).
+
 Now given that [Obsidian](https://obsidian.md) is based on markdown, this allows us to directly use one of the existing markdown renderers that are a lot more sound than the notion ones.
 Last time I did a friend website blog I used [Hugo](https://gohugo.io), but having to use `golang` to format html and js code feels quite weird, so this time I decided to go for [Astro](https://astro.build) instead. 
+
 I've never been a NodeJs fan, but I have to admit that the typescript/react suite for web development it's just incredibly superior to anything else.
 
 My toolchain this time looks something like this:
@@ -47,6 +61,7 @@ My toolchain this time looks something like this:
 - [Multiterm](https://astro.build/themes/details/multiterm/) as initial code for the blog server
 - [Cloudflare](https://cloudflare.com) to build, deploy and host the website
 And 75 lines of python code
+
 ```python
 import re
 import os
@@ -149,5 +164,6 @@ if __name__ == "__main__":
 
 ```
 
-The new result you can see from yoursef
+The new result you can see from yourself
+
 I have to admit that I really like it, it's blazingly fast and fully customizable., let's hope it will stand the trial of time
