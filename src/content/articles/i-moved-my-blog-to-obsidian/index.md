@@ -1,5 +1,5 @@
 ---
-published: 2023-07-21
+published: 2025-08-18
 tags:
 - Blogging
 - Homelab
