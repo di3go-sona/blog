@@ -3,11 +3,8 @@ import os
 import shutil
 import yaml
 
-from marko import Markdown
-
-
 OBSIDIAN_VAULT_PATH = '/Users/di3go/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/'
-ASTRO_CONTENT_PATH = '/Users/di3go/Projects/multiterm-astro/src/content'
+ASTRO_CONTENT_PATH = '/Users/di3go/Projects/blog-astro/src/content'
 OBSIDIAN_PAGES_PATH = f"{OBSIDIAN_VAULT_PATH}/Pages"
 OBSIDIAN_ASSETS_PATH = f"{OBSIDIAN_VAULT_PATH}/Assets"
 FOLDERS_MAPPING = {
@@ -15,14 +12,10 @@ FOLDERS_MAPPING = {
     f"{OBSIDIAN_PAGES_PATH}/Blog/Writeups": f"{ASTRO_CONTENT_PATH}/writeups"
 }
 
-all_types = []
-
 def list_documents(path):
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
 if __name__ == "__main__":
-
-    md = Markdown()
 
     for source_folder_path, target_folder_path in FOLDERS_MAPPING.items():
 
@@ -37,9 +30,12 @@ if __name__ == "__main__":
             filename, extension = os.path.splitext(full_filename)
             target_dirname = filename.lower().replace(' ', '-')
 
-            source_filepath = os.path.join(source_folder_path, full_filename)
-            target_dirpath = os.path.join(target_folder_path, target_dirname)
-            target_filepath = os.path.join(target_folder_path, target_dirname, 'index.md')
+            source_filepath = \
+                os.path.join(source_folder_path, full_filename)
+            target_dirpath = \
+                os.path.join(target_folder_path, target_dirname)
+            target_filepath = \
+                os.path.join(target_folder_path, target_dirname, 'index.md')
 
             # Create the target file path
             os.makedirs(target_dirpath)
@@ -67,7 +63,6 @@ if __name__ == "__main__":
 
                 else:
                     raise ValueError(f"Frontmatter not found in {source_filepath}")
-                print(new_file_frontmatter)
 
                 attachment_matches = re.finditer(r'[!]\[\[(.*?)([|](.*?))?\]\]', file_content)
                 for attachment_match in attachment_matches:
@@ -75,7 +70,7 @@ if __name__ == "__main__":
                     source_attachment_path = os.path.join(OBSIDIAN_ASSETS_PATH, attachment_name)
                     target_attachment_path = os.path.join(target_dirpath, attachment_name)
                     shutil.copyfile(source_attachment_path, target_attachment_path)
-                    # file_content[attachment_match.start():attachment_match.end()] = f'![{attachment_name}](./{attachment_name})'
+
                     file_content = file_content.replace(attachment_match.group(0), f'![{attachment_name}](./{attachment_name})')
 
                 with open(target_filepath, 'w') as target_file:

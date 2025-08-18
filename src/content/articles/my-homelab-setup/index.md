@@ -1,7 +1,9 @@
 ---
 published: 2025-07-21
 tags:
-- DevOps
+- Infra
+- Monitoring
+- Homelab
 title: My Homelab setup
 
 ---
