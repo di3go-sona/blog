@@ -67,6 +67,7 @@ if __name__ == "__main__":
                 attachment_matches = re.finditer(r'[!]\[\[(.*?)([|](.*?))?\]\]', file_content)
                 for attachment_match in attachment_matches:
                     attachment_name = attachment_match.group(1)
+                    print(f"Processing attachment: {attachment_name}")
                     source_attachment_path = os.path.join(OBSIDIAN_ASSETS_PATH, attachment_name)
                     target_attachment_path = os.path.join(target_dirpath, attachment_name)
                     shutil.copyfile(source_attachment_path, target_attachment_path)

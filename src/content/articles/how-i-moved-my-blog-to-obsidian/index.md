@@ -3,7 +3,7 @@ published: 2025-08-18
 tags:
 - Blogging
 - Homelab
-title: I moved my blog to Obsidian
+title: How I moved my blog to Obsidian
 
 ---
 
@@ -12,17 +12,17 @@ I started blogging around 3 years ago, at that time I was using Notion as my mai
 As I am a deep believer of 'less is more', it was a natural decision to use Notion as my blogging platform as well, and I basically had 5 options:
 
 - Get the Notion Pro plan and directly build the website using built in functionality
-	✅ PROS: Quick
-	🛑 CONS: Monthly Fee, Limited customization options
+- ✅ PROS: Quick
+- 🛑 CONS: Monthly Fee, Limited customization options
 
 - Keep the Notion Free plan and use existing services to turn it into a website
   There are lots of services to do this like [Potion.so](https://potion.so) and [Super.so](https://super.so) but basically they all work in the same way
-	✅ PROS:  Quick, Nice designs, cheaper
-	🛑 CONS: Monthly Fee, Limited customization options, another dependency in the pipeline
+- ✅ PROS:  Quick, Nice designs, cheaper
+- 🛑 CONS: Monthly Fee, Limited customization options, another dependency in the pipeline
 
 - Do something on my own using open-source components
-	✅ PROS:  Free, Full customization
-	🛑 CONS: Time consuming
+- ✅ PROS:  Free, Full customization
+- 🛑 CONS: Time consuming
 
 
 In the end I decided to go with the last option, thinking to start small and improve along the way. I used:
@@ -43,7 +43,7 @@ Additionally the loading speed was good but not excellent as pages were re-fetch
 
 Thirdly I found it very hard to do small changes into the UI as it's a very complex recursive renderer, in which blocks could contain other blocks, or widgets or inlines
 
-All these limitations made me decide to try and go for another approach. As I am trying to self-host the tools I use, and go for a more minimal and open-source approach to my toolbelt I decided to move fron [Notion](https://notion.com) to [Obsidian](https://obsidian.md).
+All these limitations made me decide to try and go for another approach. As I am trying to self-host the tools I use, and go for a more minimal and open-source approach for my toolbelt I decided to move fron [Notion](https://notion.com) to [Obsidian](https://obsidian.md).
 
 Now given that [Obsidian](https://obsidian.md) is based on markdown, this allows us to directly use one of the existing markdown renderers that are a lot more sound than the notion ones.
 Last time I did a friend website blog I used [Hugo](https://gohugo.io), but having to use `golang` to format html and js code feels quite weird, so this time I decided to go for [Astro](https://astro.build) instead. 
@@ -55,7 +55,11 @@ My toolchain this time looks something like this:
 - [Astro](https://astro.com) as renderer from Markdwon to html
 - [Multiterm](https://astro.build/themes/details/multiterm/) as initial code for the blog server
 - [Cloudflare](https://cloudflare.com) to build, deploy and host the website
-And 75 lines of python code
+
+And 75 lines of python code that allows me to move content from obsidian to astro content folder with some links.
+There were better ways to achieve this for sure, you can use github pipelines, or maybe some notinon plugin, and so on...
+
+But nothing will ever give you the simplicity and customization level that you can achieve with a few lines of python
 
 ```python
 import re
