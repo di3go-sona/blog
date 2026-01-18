@@ -1,8 +1,11 @@
 ---
-import { dateString, url } from '@utils'
-import { Icon } from 'astro-icon/components'
+import IconChevronsRight from '~/icons/chevrons-right.svg'
 import type { CollectionEntry } from 'astro:content'
 import { render } from 'astro:content'
+import Tags from '~/components/Tags.astro'
+import PostInfo from '~/components/PostInfo.astro'
+import type { Collation } from '~/types'
+import { TagsGroup } from '~/utils'
 
 interface Props {
   post: CollectionEntry<'articles' | 'writeups'>
@@ -11,59 +14,33 @@ interface Props {
 const { post } = Astro.props
 
 const { remarkPluginFrontmatter } = await render(post)
-const { minutesRead } = remarkPluginFrontmatter
 const description = remarkPluginFrontmatter.description || post.data.description
+let tags: Collation<'posts'>[] | undefined
+if (post.data.tags && post.data.tags.length > 0) {
+  const tagsGroup = await TagsGroup.build()
+  tags = tagsGroup.matchMany(post.data.tags)
+}
+const samePage = Astro.url.pathname === `/posts/${post.id}`
+const articleLink = samePage ? `#${post.id}` : `/posts/${post.id}`
 ---
 
-<article class="w-full py-5 my-4 border-accent/10">
-  <h1 class="mb-3 text-2xl text-[var(--theme-h1)] font-semibold">
-    <a href={url(post.collection, post.id)}># {post.data.title}</a>
+<article class="w-full py-5 my-1 md:my-4 border-accent/10">
+  <h1 class="mb-3 text-2xl text-heading1 font-semibold">
+    <a href={articleLink}># {post.data.title}</a>
   </h1>
-  <div class="text-foreground/80 my-3">
-    <time>{dateString(post.data.published)}</time>
-    {
-      post.data?.ctf && (
-        <span class="before:content-['::'] before:inline-block before:mx-0.5">
-          {post.data?.ctf}
-        </span>
-      )
-    }
-    {
-      post.data.author && (
-        <span class="before:content-['::'] before:inline-block before:mx-0.5">
-          {post.data.author}
-        </span>
-      )
-    }
-    {
-      minutesRead && (
-        <span class="before:content-['::'] before:inline-block before:mx-0.5">
-          {minutesRead}
-        </span>
-      )
-    }
-  </div>
-  {description && <p class="my-4 text-base/7 text-foreground">{description}</p>}
-  <div class="flex items-center">
-    {
-      post.data.tags && (
-        <div class="text-accent grow">
-          {post.data.tags.map((tag) => (
-            <span>
-              🏷️
-              <a class="underline gap-x-5" href={url('tags', tag)}>
-                {tag}
-              </a>
-            </span>
-          ))}
-        </div>
-      )
-    }
-    <div class="">
-      <a class="button" href={url(post.collection, post.id)}>
-        Read
-        <Icon name="chevrons-right" class="size-5 ml-2" />
-      </a>
-    </div>
+  <PostInfo post={post} class="mb-3 mt-4" />
+  {description && <p class="pl-0.5 my-4 text-base/7 text-foreground">{description}</p>}
+  {
+    tags && (
+      <div class="mb-6">
+        <Tags tags={tags} />
+      </div>
+    )
+  }
+  <div>
+    <a class="button flex items-center !pl-3.5" href={articleLink}>
+      {samePage ? 'Continue' : 'Read'}
+      <IconChevronsRight class="size-5 ml-2" />
+    </a>
   </div>
 </article>

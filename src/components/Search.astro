@@ -1,16 +1,19 @@
 ---
 import '@pagefind/default-ui/css/ui.css'
-import { Icon } from 'astro-icon/components'
+import IconCircleX from '~/icons/circle-x.svg'
+import IconSearch from '~/icons/search.svg'
+
+const { trailingSlashes = false } = Astro.props
 ---
 
-<site-search class="ms-auto" id="search">
+<site-search class="ms-auto" id="search" data-trailing-slashes={trailingSlashes}>
   <button
     class="hover:text-accent flex cursor-pointer items-center justify-center rounded-md"
     aria-keyshortcuts="Control+K Meta+K"
     data-open-modal
     disabled
   >
-    <Icon name="search" class="size-6 text-accent" />
+    <IconSearch class="size-6 text-accent" />
     <span class="sr-only">Open Search</span>
   </button>
   <dialog
@@ -19,7 +22,7 @@ import { Icon } from 'astro-icon/components'
   >
     <div class="dialog-frame flex grow flex-col gap-4 p-6 pt-6 max-w-full">
       <button class="cursor-pointer fixed top-2 right-2 rounded-full" data-close-modal>
-        <Icon name="circle-x" class="size-6 text-accent/50" />
+        <IconCircleX class="size-6 text-accent/50" />
       </button>
       {
         import.meta.env.DEV ? (
@@ -84,6 +87,9 @@ import { Icon } from 'astro-icon/components'
     #dialogFrame: HTMLDivElement | null
     #openBtn: HTMLButtonElement | null
     #controller: AbortController
+    trailingSlashes: boolean
+    stripTrailingSlash: (path: string) => string
+    formatURL: (path: string) => string
 
     constructor() {
       super()
@@ -92,6 +98,12 @@ import { Icon } from 'astro-icon/components'
       this.#dialog = this.querySelector<HTMLDialogElement>('dialog')
       this.#dialogFrame = this.querySelector('.dialog-frame')
       this.#controller = new AbortController()
+
+      this.trailingSlashes = this.dataset.trailingSlashes === 'true' ? true : false
+      this.stripTrailingSlash = (path: string) => path.replace(/(.)\/(#.*)?$/, '$1$2')
+      this.formatURL = !this.trailingSlashes
+        ? this.stripTrailingSlash
+        : (path: string) => path
 
       // Set up events
       if (this.#openBtn) {
@@ -110,6 +122,8 @@ import { Icon } from 'astro-icon/components'
       if (this.#dialog) {
         this.#dialog.addEventListener('close', () => {
           window.removeEventListener('click', this.onWindowClick)
+          const body = document.querySelector('body')
+          body?.classList.remove('overflow-hidden')
         })
       } else {
         console.warn('Dialog not found')
@@ -120,12 +134,27 @@ import { Icon } from 'astro-icon/components'
       const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1))
       onIdle(async () => {
         const { PagefindUI } = await import('@pagefind/default-ui')
+
         new PagefindUI({
           baseUrl: import.meta.env.BASE_URL,
           bundlePath: import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
           element: '#pagefind-search',
           showImages: false,
           showSubResults: true,
+          processResult: (result: {
+            url: string
+            sub_results: Array<{ url: string }>
+          }) => {
+            // Ensure links in search results match the trailing slashes setting
+            result.url = this.formatURL(result.url)
+
+            result.sub_results = result.sub_results.map((res) => {
+              res.url = this.formatURL(res.url)
+              return res
+            })
+
+            return result
+          },
         })
       })
     }
@@ -159,8 +188,6 @@ import { Icon } from 'astro-icon/components'
     }
 
     closeModal = () => {
-      const body = document.querySelector('body')
-      body?.classList.remove('overflow-hidden')
       this.#dialog?.close()
     }
 

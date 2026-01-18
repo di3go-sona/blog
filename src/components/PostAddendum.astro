@@ -1,5 +1,5 @@
 ---
-import type { FrontmatterImage } from '@types'
+import type { FrontmatterImage } from '~/types'
 import { Image } from 'astro:assets'
 
 interface Props {
@@ -16,7 +16,10 @@ const { avatarImage } = Astro.props
       <Image
         src={avatarImage.src}
         alt={avatarImage.alt}
-        class="rounded-full size-40 border-8 border-accent/15"
+        class="rounded-full border-8 border-accent/15 size-36 aspect-square box-content shrink-0"
+        widths={[288]}
+        height={144}
+        width={144}
       />
     )
   }

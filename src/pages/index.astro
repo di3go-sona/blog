@@ -1,12 +1,14 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import { getSortedPosts, url } from '@utils'
+import Layout from '~/layouts/Layout.astro'
+import { getSortedPosts } from '~/utils'
 import { getCollection, render } from 'astro:content'
-import PostPreview from '@components/PostPreview.astro'
-import Pagination from '@components/Pagination.astro'
-import BlockHeader from '@components/BlockHeader.astro'
-import HomeBanner from '@components/HomeBanner.astro'
-import siteConfig from '../site.config'
+import PostPreview from '~/components/PostPreview.astro'
+import Pagination from '~/components/Pagination.astro'
+import BlockHeader from '~/components/BlockHeader.astro'
+import HomeBanner from '~/components/HomeBanner.astro'
+import siteConfig from '~/site.config'
+import TagsSection from '~/components/TagsSection.astro'
+import SeriesSection from '~/components/SeriesSection.astro'
 
 const homeHeaderCollection = await getCollection('homeHeader')
 const homeBodyCollection = await getCollection('homeBody')
@@ -20,14 +22,12 @@ if (homeHeaderCollection.length > 0) {
   const { Content } = await render(homeHeader)
   HomeHeaderContent = Content
 }
+const sortedPosts = await getSortedPosts()
+const postsHaveTags = sortedPosts.some(
+  (post) => post.data.tags && post.data.tags.length > 0,
+)
 
-if (homeBodyCollection.length > 0) {
-  homeBody = homeBodyCollection[0]
-  const { Content } = await render(homeBody)
-  HomeBodyContent = Content
-}
-const articles = (await getSortedPosts('articles')).slice(0, 3)
-const writeups = (await getSortedPosts('writeups')).slice(0, 3)
+const postsHaveSeries = sortedPosts.some((post) => post.data.series)
 ---
 
 <Layout>
@@ -39,18 +39,35 @@ const writeups = (await getSortedPosts('writeups')).slice(0, 3)
     )
   }
   {
-    HomeBodyContent && homeBody && (
-      <HomeBanner githubCalendar={homeBody.data.githubCalendar}>
-        <HomeBodyContent />
-      </HomeBanner>
+    postsHaveSeries && (
+      <section>
+        <BlockHeader>Series</BlockHeader>
+        <SeriesSection posts={sortedPosts} />
+      </section>
     )
   }
-  <BlockHeader>📝 Latest Articles</BlockHeader>
-  {articles.map((article) => <PostPreview post={article} />)}
-  <Pagination nextLink={url('articles')} nextText="All Articles" />
-  <BlockHeader>⛳️ Latest Writeups</BlockHeader>
-  {writeups.map((writeup) => <PostPreview post={writeup} />)}
-  <Pagination nextLink={url('writeups')} nextText="All Writeups" />
+  {
+    postsHaveTags && (
+      <section>
+        <BlockHeader>Tags</BlockHeader>
+        <TagsSection posts={sortedPosts} />
+      </section>
+    )
+  }
+  {
+    sortedPosts.length > 0 && (
+      <section>
+        <BlockHeader>Latest Posts</BlockHeader>
+        {sortedPosts
+          .reverse()
+          .slice(0, Math.floor(siteConfig.pageSize / 2))
+          .map((post) => (
+            <PostPreview post={post} />
+          ))}
+        <Pagination nextLink="/posts" nextText="Archive" />
+      </section>
+    )
+  }
 </Layout>
 
 <style is:global>

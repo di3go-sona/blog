@@ -1,13 +1,12 @@
-import siteConfig from '../../site.config'
+import siteConfig from '~/site.config'
 import { Resvg } from '@resvg/resvg-js'
 import type { APIContext, InferGetStaticPropsType } from 'astro'
 import satori, { type SatoriOptions } from 'satori'
 import { html } from 'satori-html'
-import { dateString, getSortedPosts, resolveElementStyles } from '@utils'
+import { dateString, getSortedPosts, resolveThemeColorStyles } from '~/utils'
 import path from 'path'
 import fs from 'fs'
 import type { ReactNode } from 'react'
-import { loadShikiTheme } from 'astro-expressive-code'
 
 // Load the font file as binary data
 const fontPath = path.resolve(
@@ -15,24 +14,34 @@ const fontPath = path.resolve(
 )
 const fontData = fs.readFileSync(fontPath) // Reads the file as a Buffer
 
-const avatarPath = path.resolve('./src/content/avatar.png')
+const avatarPath = path.resolve(siteConfig.socialCardAvatarImage)
 let avatarData: Buffer | undefined
 let avatarBase64: string | undefined
-if (fs.existsSync(avatarPath)) {
+if (
+  fs.existsSync(avatarPath) &&
+  (path.extname(avatarPath).toLowerCase() === '.jpg' ||
+    path.extname(avatarPath).toLowerCase() === '.jpeg')
+) {
   avatarData = fs.readFileSync(avatarPath)
   avatarBase64 = `data:image/png;base64,${avatarData.toString('base64')}`
 }
 
-const defaultShikiTheme = await loadShikiTheme(
+const defaultTheme =
   siteConfig.themes.default === 'auto'
     ? siteConfig.themes.include[0]
-    : siteConfig.themes.default,
-)
+    : siteConfig.themes.default
 
-const themeStyles = resolveElementStyles(defaultShikiTheme, {})
-const bg = themeStyles.background
-const fg = themeStyles.foreground
-const accent = themeStyles.accent
+const themeStyles = await resolveThemeColorStyles(
+  [defaultTheme],
+  siteConfig.themes.overrides,
+)
+const bg = themeStyles[defaultTheme]?.background
+const fg = themeStyles[defaultTheme]?.foreground
+const accent = themeStyles[defaultTheme]?.accent
+
+if (!bg || !fg || !accent) {
+  throw new Error(`Theme ${defaultTheme} does not have required colors`)
+}
 
 const ogOptions: SatoriOptions = {
   // debug: true,

@@ -1,8 +1,8 @@
-import type { SiteConfig } from '@types'
+import type { SiteConfig } from '~/types'
 
 const config: SiteConfig = {
   // Absolute URL to the root of your published site, used for generating links and sitemaps.
-  site: 'https://multiterm-astro.stelclementine.com',
+  site: 'https://multiterm.stelclementine.com',
   // The name of your site, used in the title and for SEO.
   title: 'di3go-sona',
   // The description of your site, used for SEO and RSS feed.
@@ -20,11 +20,20 @@ const config: SiteConfig = {
     'Cybersecurity',
     'IoT',
   ],
+  // Path to the image used for generating social media previews.
+  // Needs to be a square JPEG file due to limitations of the social card generator.
+  // Try https://squoosh.app/ to easily convert images to JPEG.
+  socialCardAvatarImage: './src/content/avatar.jpg',
   // Font imported from @fontsource or elsewhere, used for the entire site.
   // To change this see src/styles/global.css and import a different font.
   font: 'JetBrains Mono Variable',
   // For pagination, the number of posts to display per page.
-  pageSize: 5,
+  // The homepage will display half this number in the "Latest Posts" section.
+  pageSize: 6,
+  // Whether Astro should resolve trailing slashes in URLs or not.
+  // This value is used in the astro.config.mjs file and in the "Search" component to make sure pagefind links match this setting.
+  // It is not recommended to change this, since most links existing in the site currently do not have trailing slashes.
+  trailingSlashes: false,
   // The navigation links to display in the header.
   navLinks: [
     {
@@ -122,6 +131,31 @@ const config: SiteConfig = {
       'vitesse-dark',
       'vitesse-light',
     ],
+    // Optional overrides for specific themes to customize colors.
+    // Their values can be either a literal color (hex, rgb, hsl) or another theme key.
+    // See themeKeys list in src/types.ts for available keys to override and reference.
+    overrides: {
+      // Improve readability for aurora-x theme
+      'aurora-x': {
+        background: '#292929FF',
+      //   foreground: '#DDDDDDFF',
+      //   warning: '#FF7876FF',
+      //   important: '#FF98FFFF',
+      //   note: '#83AEFFFF',
+      },
+      // Make the GitHub dark theme a little cuter
+      // 'github-light': {
+      //   accent: 'magenta',
+      //   heading1: 'magenta',
+      //   heading2: 'magenta',
+      //   heading3: 'magenta',
+      //   heading4: 'magenta',
+      //   heading5: 'magenta',
+      //   heading6: 'magenta',
+      //   separator: 'magenta',
+      //   link: 'list',
+      // },
+    },
   },
   // Social links to display in the footer.
   socialLinks: {
@@ -131,6 +165,29 @@ const config: SiteConfig = {
     // email: 'https://github.com/stelcodes/multiterm-astro',
     // bluesky: 'https://github.com/stelcodes/multiterm-astro',
     // twitter: 'https://github.com/stelcodes/multiterm-astro',
+    rss: true, // Set to true to include an RSS feed link in the footer
+  },
+  // Configuration for Giscus comments.
+  // To set up Giscus, follow the instructions at https://giscus.app/
+  // You'll need a GitHub repository with discussions enabled and the Giscus app installed.
+  // Take the values from the generated script tag at https://giscus.app and fill them in here.
+  // IMPORTANT: Update giscus.json in the root of the project with your own website URL
+  // If you don't want to use Giscus, set this to undefined.
+  giscus: {
+    repo: 'stelcodes/multiterm-astro',
+    repoId: 'R_kgDOPNnBig',
+    category: 'Giscus',
+    categoryId: 'DIC_kwDOPNnBis4CteOc',
+    reactionsEnabled: true, // Enable reactions on post itself
+  },
+  // These are characters available for the character chat feature.
+  // To add your own character, add an image file to the top-level `/public` directory
+  // Make sure to compress the image to a web-friendly size (<100kb)
+  // Try using the excellent https://squoosh.app web app for creating small webp files
+  characters: {
+    owl: '/owl.webp',
+    unicorn: '/unicorn.webp',
+    duck: '/duck.webp',
   },
 }
 

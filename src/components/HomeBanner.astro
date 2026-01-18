@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
-import ReactGithubCalendar from './ReactGithubCalendar'
-import type { FrontmatterImage } from '../types'
+import GitHubActivityCalendar from '~/components/GitHubActivityCalendar.astro'
+import type { FrontmatterImage } from '~/types'
 
 interface Props {
   avatarImage?: FrontmatterImage
@@ -10,14 +10,20 @@ interface Props {
 const { avatarImage, githubCalendar } = Astro.props
 ---
 
-<div class="mt-6">
-  <div class="flex flex-col sm:flex-row items-center sm:gap-5 max-w-full">
+<div class="my-6 md:mx-2">
+  <div
+    class="flex flex-col sm:flex-row items-center justify-around sm:gap-5 max-w-full mb-6"
+  >
     {
       avatarImage && (
         <Image
+          priority
           src={avatarImage.src}
           alt={avatarImage.alt}
-          class="rounded-full border-8 border-accent/15 size-40 aspect-square"
+          class="rounded-full border-8 border-accent/15 size-36 aspect-square box-content shrink-0"
+          widths={[288]}
+          height={144}
+          width={144}
         />
       )
     }
@@ -27,18 +33,5 @@ const { avatarImage, githubCalendar } = Astro.props
       </div>
     </div>
   </div>
-  {
-    githubCalendar && (
-      <div class="h-42">
-        <ReactGithubCalendar username={githubCalendar} client:only />
-      </div>
-    )
-  }
+  {githubCalendar && <GitHubActivityCalendar username={githubCalendar} />}
 </div>
-
-<style is:global>
-  .github-calendar rect {
-    stroke: var(--theme-foreground) !important;
-    stroke-opacity: 0.1 !important;
-  }
-</style>

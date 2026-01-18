@@ -1,9 +1,9 @@
 ---
-import siteConfig from '../site.config'
-import LightDarkAutoButton from './LightDarkAutoButton.astro'
-import Search from './Search.astro'
-import SelectTheme from './SelectTheme.astro'
-import NavLink from './NavLink.astro'
+import siteConfig from '~/site.config'
+import LightDarkAutoButton from '~/components/LightDarkAutoButton.astro'
+import Search from '~/components/Search.astro'
+import SelectTheme from '~/components/SelectTheme.astro'
+import NavLink from '~/components/NavLink.astro'
 
 const lightDarkAutoTheme = siteConfig.themes.mode === 'light-dark-auto'
 const selectTheme =
@@ -20,7 +20,7 @@ const selectTheme =
       {siteConfig.title}
     </a>
     <div class="flex items-center gap-3 sm:mr-3">
-      <Search />
+      <Search trailingSlashes={siteConfig.trailingSlashes} />
       {lightDarkAutoTheme && <LightDarkAutoButton />}
       {selectTheme && <SelectTheme />}
       <nav id="nav-mobile" aria-label="Menu" class="p-0 text-accent sm:hidden">
@@ -49,7 +49,7 @@ const selectTheme =
     </div>
   </div>
   <nav aria-label="Menu" class="p-0 mt-4 ml-0.5 text-accent hidden sm:block">
-    <ul class="flex flex-row text-accent mb-2.5">
+    <ul class="flex flex-row text-accent">
       {
         siteConfig.navLinks.map((link) => (
           <li class="mr-5" aria-expanded="true">

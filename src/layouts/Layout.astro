@@ -1,12 +1,11 @@
 ---
-import '/src/styles/global.css'
-import Header from '@components/Header.astro'
-import Footer from '@components/Footer.astro'
-import LightDarkAutoThemeLoader from '@components/LightDarkAutoThemeLoader.astro'
-import SelectThemeLoader from '@components/SelectThemeLoader.astro'
-import { loadShikiTheme } from 'astro-expressive-code'
-import siteConfig from '../site.config'
-import { resolveElementStyles } from '@utils'
+import '~/styles/global.css'
+import Header from '~/components/Header.astro'
+import Footer from '~/components/Footer.astro'
+import LightDarkAutoThemeLoader from '~/components/LightDarkAutoThemeLoader.astro'
+import SelectThemeLoader from '~/components/SelectThemeLoader.astro'
+import siteConfig from '~/site.config'
+import { pick, resolveThemeColorStyles } from '~/utils'
 import crypto from 'crypto'
 import Analytics from '@vercel/analytics/astro'
 
@@ -53,7 +52,11 @@ if (themeMode === 'light-dark-auto' && siteConfig.themes.include.length < 2) {
 }
 let defaultTheme = siteConfig.themes.default || siteConfig.themes.include[0]
 let includedThemes = siteConfig.themes.include as string[]
-if (!includedThemes.includes(defaultTheme)) {
+const themeNotIncluded = !includedThemes.includes(defaultTheme)
+if (
+  (themeMode !== 'light-dark-auto' && themeNotIncluded) ||
+  (themeMode === 'light-dark-auto' && defaultTheme !== 'auto' && themeNotIncluded)
+) {
   console.warn(
     `Default theme "${defaultTheme}" not found in themes. Using first theme: "${siteConfig.themes.include[0]}".`,
   )
@@ -69,19 +72,41 @@ const themeHash = crypto
   .digest('hex')
   .slice(0, 8) // Truncate to the first 8 characters
 
-let resolvedThemes: { [key: string]: { [key: string]: string } } = {}
-for (const theme of siteConfig.themes.include) {
-  const loadedTheme = await loadShikiTheme(theme)
-  resolvedThemes[theme] = resolveElementStyles(
-    loadedTheme,
-    {}, // Pass an empty object to use default styles
-  )
-}
+const resolvedThemes = await resolveThemeColorStyles(
+  siteConfig.themes.include,
+  siteConfig.themes.overrides,
+)
 
 let cssLines: string[] = []
 for (const [themeId, themeStyles] of Object.entries(resolvedThemes)) {
+  const relevantStyles = pick(themeStyles, [
+    'foreground',
+    'background',
+    'accent',
+    'heading1',
+    'heading2',
+    'heading3',
+    'heading4',
+    'heading5',
+    'heading6',
+    'list',
+    'italic',
+    'link',
+    'separator',
+    'note',
+    'tip',
+    'important',
+    'caution',
+    'warning',
+    'blue',
+    'green',
+    'red',
+    'yellow',
+    'magenta',
+    'cyan',
+  ])
   cssLines.push(`:root[data-theme="${themeId}"] {`)
-  for (const [key, value] of Object.entries(themeStyles)) {
+  for (const [key, value] of Object.entries(relevantStyles)) {
     cssLines.push(`--theme-${key}: ${value};`)
   }
   cssLines.push(`}`)
@@ -133,10 +158,10 @@ let generatedCss: string = cssLines.join('\n')
   </head>
   <body class="w-full h-full m-0 bg-background text-foreground">
     <div
-      class="flex flex-col max-w-[812px] min-h-screen border-accent/10 m-auto py-5 px-4 sm:px-6 md:p-10"
+      class="flex flex-col max-w-3xl min-h-screen border-accent/10 m-auto p-3 sm:py-5 sm:px-6 md:py-10"
     >
       <Header />
-      <main class="flex flex-col">
+      <main class="flex flex-col py-1">
         <slot />
       </main>
       <Footer />
