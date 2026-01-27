@@ -154,7 +154,6 @@ let generatedCss: string = cssLines.join('\n')
     <style is:inline set:html={generatedCss}></style>
     {themeMode === 'light-dark-auto' && <LightDarkAutoThemeLoader />}
     {themeMode === 'select' && <SelectThemeLoader />}
-    <Analytics />
   </head>
   <body class="w-full h-full m-0 bg-background text-foreground">
     <div

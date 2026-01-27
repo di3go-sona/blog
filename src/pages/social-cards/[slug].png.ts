@@ -23,7 +23,7 @@ if (
     path.extname(avatarPath).toLowerCase() === '.jpeg')
 ) {
   avatarData = fs.readFileSync(avatarPath)
-  avatarBase64 = `data:image/png;base64,${avatarData.toString('base64')}`
+  avatarBase64 = `data:image/jpeg;base64,${avatarData.toString('base64')}`
 }
 
 const defaultTheme =
@@ -90,7 +90,7 @@ export async function GET(context: APIContext) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getSortedPosts('articles')
+  const posts = await getSortedPosts()
   return posts
     .map((post) => ({
       params: { slug: post.id },

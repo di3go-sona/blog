@@ -1,8 +1,15 @@
 ---
 avatarImage:
-  src: './avatar.jpg'
+  src: './avatar.png'
   alt: 'My avatar'
 githubCalendar: 'stelcodes'
 ---
 
-Welcome to the example site. This site is meant to show off my custom Astro theme/template **MultiTerm** which creates a coder-ready blog complete with an interactive theme changer, RSS, sitemap, tagging, and markdown extensions.
+Hi, I'm Diego
+
+I am a SRE @ [Nebul](https://nebul.com)
+
+I work with Kubernetes and Linux Infrastructures and I enjoy homelabbing with RPis, tinkering with Arduinos and hacking on CTFs.
+
+In my spare time I like bouldering, cooking and camping
+

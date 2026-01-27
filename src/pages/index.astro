@@ -10,17 +10,16 @@ import siteConfig from '~/site.config'
 import TagsSection from '~/components/TagsSection.astro'
 import SeriesSection from '~/components/SeriesSection.astro'
 
-const homeHeaderCollection = await getCollection('homeHeader')
-const homeBodyCollection = await getCollection('homeBody')
-let homeHeader
-let homeBody
-let HomeHeaderContent
-let HomeBodyContent
-
-if (homeHeaderCollection.length > 0) {
-  homeHeader = homeHeaderCollection[0]
-  const { Content } = await render(homeHeader)
-  HomeHeaderContent = Content
+const home = await getCollection('home')
+let HomeContent
+let homeAvatarImage
+let homeGithubCalendar
+if (home.length > 0) {
+  const homeEntry = home[0]
+  const { Content } = await render(homeEntry)
+  HomeContent = Content
+  homeAvatarImage = homeEntry.data.avatarImage
+  homeGithubCalendar = homeEntry.data.githubCalendar
 }
 const sortedPosts = await getSortedPosts()
 const postsHaveTags = sortedPosts.some(
@@ -32,9 +31,9 @@ const postsHaveSeries = sortedPosts.some((post) => post.data.series)
 
 <Layout>
   {
-    HomeHeaderContent && homeHeader && (
-      <HomeBanner avatarImage={homeHeader.data.avatarImage}>
-        <HomeHeaderContent />
+    HomeContent && (
+      <HomeBanner avatarImage={homeAvatarImage} githubCalendar={homeGithubCalendar}>
+        <HomeContent />
       </HomeBanner>
     )
   }

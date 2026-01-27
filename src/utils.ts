@@ -214,8 +214,8 @@ export async function resolveThemeColorStyles(
   return Object.fromEntries(await Promise.all(resolvedThemes)) as ThemesWithColorStyles
 }
 
-export async function getSortedPosts(collection: 'articles' | 'writeups') {
-  const allPosts = await getCollection(collection, ({ data }) => {
+export async function getSortedPosts() {
+  const allPosts = await getCollection('posts', ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true
   })
   const sortedPosts = allPosts.sort((a, b) => {

@@ -23,7 +23,7 @@ const config: SiteConfig = {
   // Path to the image used for generating social media previews.
   // Needs to be a square JPEG file due to limitations of the social card generator.
   // Try https://squoosh.app/ to easily convert images to JPEG.
-  socialCardAvatarImage: './src/content/avatar.jpg',
+  socialCardAvatarImage: './src/content/avatar.png',
   // Font imported from @fontsource or elsewhere, used for the entire site.
   // To change this see src/styles/global.css and import a different font.
   font: 'JetBrains Mono Variable',
@@ -57,10 +57,10 @@ const config: SiteConfig = {
   // The theming configuration for the site.
   themes: {
     // The theming mode. One of "single" | "select" | "light-dark-auto".
-    mode: 'single',
+    mode: 'select',
     // The default theme identifier, used when themeMode is "select" or "light-dark-auto".
     // Make sure this is one of the themes listed in `themes` or "auto" for "light-dark-auto" mode.
-    default: 'aurora-x',
+    default: 'ayu-dark',
     // Shiki themes to bundle with the site.
     // https://expressive-code.com/guides/themes/#using-bundled-themes
     // These will be used to theme the entire site along with syntax highlighting.
@@ -137,11 +137,11 @@ const config: SiteConfig = {
     overrides: {
       // Improve readability for aurora-x theme
       'aurora-x': {
-        background: '#292929FF',
-      //   foreground: '#DDDDDDFF',
-      //   warning: '#FF7876FF',
-      //   important: '#FF98FFFF',
-      //   note: '#83AEFFFF',
+        background: '#181818ff',
+        // foreground: '#DDDDDDFF',
+        //   warning: '#FF7876FF',
+        //   important: '#FF98FFFF',
+        //   note: '#83AEFFFF',
       },
       // Make the GitHub dark theme a little cuter
       // 'github-light': {
