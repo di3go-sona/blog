@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { getSortedPosts } from '~/utils'
+import { getAllSortedPosts } from '~/utils'
 import { getCollection, render } from 'astro:content'
 import PostPreview from '~/components/PostPreview.astro'
 import Pagination from '~/components/Pagination.astro'
@@ -21,7 +21,7 @@ if (home.length > 0) {
   homeAvatarImage = homeEntry.data.avatarImage
   homeGithubCalendar = homeEntry.data.githubCalendar
 }
-const sortedPosts = await getSortedPosts()
+const sortedPosts = await getAllSortedPosts()
 const postsHaveTags = sortedPosts.some(
   (post) => post.data.tags && post.data.tags.length > 0,
 )

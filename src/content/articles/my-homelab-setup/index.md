@@ -1,8 +1,6 @@
 ---
 published: 2025-07-21
 tags:
-- Infra
-- Monitoring
 - Homelab
 title: My Homelab setup
 
@@ -110,9 +108,10 @@ I thought to make this article around the lines of 'hey look how cool my homelab
    The more I progressed into it
 ### Improvements and new iteration
 
-- Turn the docker cluster into a kubernetes one
-- Add 2 more Pi5 to the kubernetes cluster and remove the Pi1 from ansible/kubernetes. We can use it for hardware management tasks such as
+- For the next iteration I really think is worth to ditch Docker in favor of Kubernetes, I really want to experiment around with it.
+- In order to do that I will need some additional fireopwer, so I will add 2 more Pi 5 to the Kubernetes cluster and remove the Pi 1 from it. We can use it for hardware management tasks such as
 	- Netboot server
 	- Power management of the other Pis
 	- Connect to UART shell of other Pis
 	- Manage lights in the rack ? 
+- Then setup the cluster, attach some storage and use helm to deploy services

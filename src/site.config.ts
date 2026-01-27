@@ -48,6 +48,10 @@ const config: SiteConfig = {
       name: ' CTF Writeups ',
       url: '/writeups',
     },
+    {
+      name: ' Tags ',
+      url: '/tags',
+    },
     // {
     //   name: ' GitHub',
     //   url: 'https://github.com/di3go-sona',

@@ -1,7 +1,6 @@
 ---
 published: 2025-08-18
 tags:
-- Blogging
 - Homelab
 title: How I moved my blog to Obsidian
 
