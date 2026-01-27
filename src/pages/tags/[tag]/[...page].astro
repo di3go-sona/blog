@@ -9,6 +9,7 @@ import PageHeader from '~/components/PageHeader.astro'
 
 // Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
 export const getStaticPaths = (async ({ paginate }) => {
+  // Build tags from all collections (posts, articles, and writeups)
   const tagsGroup = await TagsGroup.build()
   const pages = tagsGroup.collations.flatMap((tags) => {
     // Use flatMap to lift the posts for each tag into a single array

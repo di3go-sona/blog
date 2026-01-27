@@ -1,26 +1,38 @@
 import { defineCollection, z } from 'astro:content'
 import { glob } from 'astro/loaders'
 
+const postSchema = ({ image }: { image: any }) =>
+  z.object({
+    title: z.string(),
+    published: z.coerce.date(),
+    // updated: z.coerce.date().optional(),
+    draft: z.boolean().optional().default(false),
+    description: z.string().optional(),
+    author: z.string().optional(),
+    series: z.string().optional(),
+    tags: z.array(z.string()).optional().default([]),
+    coverImage: z
+      .strictObject({
+        src: image(),
+        alt: z.string(),
+      })
+      .optional(),
+    toc: z.boolean().optional().default(true),
+  })
+
 const postsCollection = defineCollection({
   loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/posts' }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      published: z.coerce.date(),
-      // updated: z.coerce.date().optional(),
-      draft: z.boolean().optional().default(false),
-      description: z.string().optional(),
-      author: z.string().optional(),
-      series: z.string().optional(),
-      tags: z.array(z.string()).optional().default([]),
-      coverImage: z
-        .strictObject({
-          src: image(),
-          alt: z.string(),
-        })
-        .optional(),
-      toc: z.boolean().optional().default(true),
-    }),
+  schema: postSchema,
+})
+
+const articlesCollection = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/articles' }),
+  schema: postSchema,
+})
+
+const writeupsCollection = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/writeups' }),
+  schema: postSchema,
 })
 
 const homeCollection = defineCollection({
@@ -52,6 +64,8 @@ const addendumCollection = defineCollection({
 
 export const collections = {
   posts: postsCollection,
+  articles: articlesCollection,
+  writeups: writeupsCollection,
   home: homeCollection,
   addendum: addendumCollection,
 }

@@ -4,7 +4,7 @@ import { render, type CollectionEntry } from 'astro:content'
 import type { Collation } from '~/types'
 
 interface Props {
-  post: CollectionEntry<'posts'>
+  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
   class?: string
 }
 
@@ -12,7 +12,7 @@ const { post, class: className } = Astro.props
 const { remarkPluginFrontmatter } = await render(post)
 const { minutesRead } = remarkPluginFrontmatter
 const seriesFrontmatter = post.data.series
-let series: Collation<'posts'> | undefined
+let series: Collation<any> | undefined
 let seriesPostNumber: number | undefined
 let seriesTotal: number | undefined
 if (seriesFrontmatter) {
@@ -22,7 +22,7 @@ if (seriesFrontmatter) {
     // This should never happen if the series data is correct
     throw new Error(`Series "${seriesFrontmatter}" not found`)
   }
-  seriesPostNumber = series.entries.findIndex((p) => p.id === post.id) + 1
+  seriesPostNumber = series.entries.findIndex((p: any) => p.id === post.id) + 1
   seriesTotal = series.entries.length
 }
 ---

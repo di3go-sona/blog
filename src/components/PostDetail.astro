@@ -1,0 +1,114 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import type { Collation } from '~/types'
+import PostInfo from './PostInfo.astro'
+import Tags from './Tags.astro'
+import TableOfContents from './TableOfContents.astro'
+import DividerText from './DividerText.astro'
+import PostPreview from './PostPreview.astro'
+import GiscusLoader from './GiscusLoader.astro'
+import siteConfig from '~/site.config'
+import ScrollUpButton from './ScrollUpButton.astro'
+import ChevronsRight from '~/icons/chevrons-right.svg'
+
+interface Props {
+  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  Content: any
+  headings: any[]
+  prev?: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  next?: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  series?: Collation<any>
+  nextPostInSeries?: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  tags?: Collation<any>[]
+  collectionType: 'posts' | 'articles' | 'writeups'
+}
+
+const { 
+  post, 
+  Content, 
+  headings, 
+  prev, 
+  next, 
+  series, 
+  nextPostInSeries, 
+  tags,
+  collectionType
+} = Astro.props
+
+const postData = post.data
+const showSeries = series && series.entries.length > 1
+const baseUrl = `/${collectionType}`
+---
+
+<article class="max-w-full py-7.5" data-pagefind-body>
+  {
+    postData.coverImage && (
+      <Image
+        priority
+        layout="constrained"
+        src={postData.coverImage.src}
+        alt={postData.coverImage.alt}
+        class="w-full rounded-xl mb-5"
+      />
+    )
+  }
+  <div class="md:mx-2">
+    <h1 id={post.id} class="mb-4 text-[1.75rem] text-heading1 font-semibold">
+      # {postData.title}
+    </h1>
+    <div class="my-2 border-l-2 border-accent/80 pl-4 py-2">
+      <PostInfo post={post} class="mb-1" />
+      {
+        tags && (
+          <div class="mt-4">
+            <Tags tags={tags} />
+          </div>
+        )
+      }
+    </div>
+  </div>
+  <!-- <hr class="border-accent/10 border-2 rounded-xl hidden lg:block" /> -->
+  <div class="flex flex-col xl:gap-1 2xl:gap-18 xl:flex-row xl:items-start">
+    {postData.toc && headings.length > 0 && <TableOfContents headings={headings} />}
+    <div class="mb-5 xl:min-w-full 2xl:min-w-full prose">
+      <Content />
+    </div>
+  </div>
+</article>
+{
+  nextPostInSeries && (
+    <a
+      href={`${baseUrl}/${nextPostInSeries.id}`}
+      class="button justify-center -mt-8 mb-8 !whitespace-normal text-center flex gap-2 sm:gap-3 items-center"
+    >
+      <span>Next: {nextPostInSeries.data.title}</span>
+      <ChevronsRight class="size-5 hidden sm:block" />
+    </a>
+  )
+}
+{
+  showSeries && series ? (
+    <section>
+      <DividerText text={`${series.title} Series`} />
+      {series.entries.map((seriesPost: any) => (
+        <PostPreview post={seriesPost} />
+      ))}
+    </section>
+  ) : prev || next ? (
+    <section>
+      <DividerText text="More Posts" />
+      {prev && <PostPreview post={prev} />}
+      {next && <PostPreview post={next} />}
+    </section>
+  ) : null
+}
+{
+  siteConfig.giscus && (
+    <section>
+      <DividerText text="Comments" />
+      <GiscusLoader />
+    </section>
+  )
+}
+<ScrollUpButton />

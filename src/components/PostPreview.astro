@@ -8,20 +8,24 @@ import type { Collation } from '~/types'
 import { TagsGroup } from '~/utils'
 
 interface Props {
-  post: CollectionEntry<'articles' | 'writeups'>
+  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
 }
 
 const { post } = Astro.props
 
+// Determine the collection type from the post
+const collectionType = 'collection' in post ? post.collection : 'posts'
+const baseUrl = `/${collectionType}`
+
 const { remarkPluginFrontmatter } = await render(post)
 const description = remarkPluginFrontmatter.description || post.data.description
-let tags: Collation<'posts'>[] | undefined
+let tags: Collation<any>[] | undefined
 if (post.data.tags && post.data.tags.length > 0) {
   const tagsGroup = await TagsGroup.build()
   tags = tagsGroup.matchMany(post.data.tags)
 }
-const samePage = Astro.url.pathname === `/posts/${post.id}`
-const articleLink = samePage ? `#${post.id}` : `/posts/${post.id}`
+const samePage = Astro.url.pathname === `${baseUrl}/${post.id}`
+const articleLink = samePage ? `#${post.id}` : `${baseUrl}/${post.id}`
 ---
 
 <article class="w-full py-5 my-1 md:my-4 border-accent/10">

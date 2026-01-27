@@ -214,8 +214,10 @@ export async function resolveThemeColorStyles(
   return Object.fromEntries(await Promise.all(resolvedThemes)) as ThemesWithColorStyles
 }
 
-export async function getSortedPosts() {
-  const allPosts = await getCollection('posts', ({ data }) => {
+export async function getSortedPosts(
+  collectionName: 'posts' | 'articles' | 'writeups' = 'posts',
+) {
+  const allPosts = await getCollection(collectionName, ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true
   })
   const sortedPosts = allPosts.sort((a, b) => {
@@ -224,28 +226,39 @@ export async function getSortedPosts() {
   return sortedPosts
 }
 
-abstract class PostsCollationGroup implements CollationGroup<'posts'> {
+export async function getAllSortedPosts() {
+  const [posts, articles, writeups] = await Promise.all([
+    getSortedPosts('posts'),
+    getSortedPosts('articles'),
+    getSortedPosts('writeups'),
+  ])
+  return [...posts, ...articles, ...writeups].sort((a, b) => {
+    return a.data.published < b.data.published ? -1 : 1
+  })
+}
+
+abstract class PostsCollationGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> implements CollationGroup<T> {
   title: string
   url: string
-  collations: Collation<'posts'>[]
+  collations: Collation<T>[]
 
-  constructor(title: string, url: string, collations: Collation<'posts'>[]) {
+  constructor(title: string, url: string, collations: Collation<T>[]) {
     this.title = title
     this.url = url
     this.collations = collations
   }
 
-  sortCollationsAlpha(): Collation<'posts'>[] {
+  sortCollationsAlpha(): Collation<T>[] {
     this.collations.sort((a, b) => a.title.localeCompare(b.title))
     return this.collations
   }
 
-  sortCollationsLargest(): Collation<'posts'>[] {
+  sortCollationsLargest(): Collation<T>[] {
     this.collations.sort((a, b) => b.entries.length - a.entries.length)
     return this.collations
   }
 
-  sortCollationsMostRecent(): Collation<'posts'>[] {
+  sortCollationsMostRecent(): Collation<T>[] {
     this.collations.sort((a, b) => {
       const aDate = a.entries[a.entries.length - 1].data.published
       const bDate = b.entries[b.entries.length - 1].data.published
@@ -254,7 +267,7 @@ abstract class PostsCollationGroup implements CollationGroup<'posts'> {
     return this.collations
   }
 
-  add(item: CollectionEntry<'posts'>, collationTitle: string): void {
+  add(item: CollectionEntry<T>, collationTitle: string): void {
     const collationTitleSlug = slug(collationTitle.trim())
     const existing = this.collations.find((i) => i.titleSlug === collationTitleSlug)
     if (existing) {
@@ -272,24 +285,35 @@ abstract class PostsCollationGroup implements CollationGroup<'posts'> {
     }
   }
 
-  match(rawKey: string): Collation<'posts'> | undefined {
+  match(rawKey: string): Collation<T> | undefined {
     return this.collations.find((entry) => entry.title === rawKey)
   }
 
-  matchMany(rawKeys: string[]): Collation<'posts'>[] {
+  matchMany(rawKeys: string[]): Collation<T>[] {
     return this.collations.filter((entry) => rawKeys.includes(entry.title))
   }
 }
 
-export class SeriesGroup extends PostsCollationGroup {
+export class SeriesGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> extends PostsCollationGroup<T> {
   // Private constructor to enforce the use of the static build method
-  private constructor(title: string, url: string, items: Collation<'posts'>[]) {
+  private constructor(title: string, url: string, items: Collation<T>[]) {
     super(title, url, items)
   }
   // Factory method to create a SeriesGroup instance with async data fetching
-  static async build(posts?: CollectionEntry<'posts'>[]): Promise<SeriesGroup> {
-    const sortedPosts = posts || (await getSortedPosts())
-    const seriesGroup = new SeriesGroup('Series', '/series', [])
+  static async build<T extends 'posts' | 'articles' | 'writeups' = 'posts'>(
+    posts?: CollectionEntry<T>[],
+    collectionName?: T,
+  ): Promise<SeriesGroup<T>> {
+    let sortedPosts: CollectionEntry<T>[]
+    if (posts) {
+      sortedPosts = posts
+    } else if (collectionName) {
+      sortedPosts = await getSortedPosts(collectionName) as CollectionEntry<T>[]
+    } else {
+      // Get all posts from all collections
+      sortedPosts = await getAllSortedPosts() as CollectionEntry<T>[]
+    }
+    const seriesGroup = new SeriesGroup<T>('Series', '/series', [])
     sortedPosts.forEach((post) => {
       const frontmatterSeries = post.data.series
       if (frontmatterSeries) {
@@ -300,16 +324,27 @@ export class SeriesGroup extends PostsCollationGroup {
   }
 }
 
-export class TagsGroup extends PostsCollationGroup {
+export class TagsGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> extends PostsCollationGroup<T> {
   // Private constructor to enforce the use of the static build method
-  private constructor(title: string, url: string, items: Collation<'posts'>[]) {
+  private constructor(title: string, url: string, items: Collation<T>[]) {
     super(title, url, items)
   }
 
-  // Factory method to create a SeriesGroup instance with async data fetching
-  static async build(posts?: CollectionEntry<'posts'>[]): Promise<SeriesGroup> {
-    const sortedPosts = posts || (await getSortedPosts())
-    const tagsGroup = new TagsGroup('Tags', '/tags', [])
+  // Factory method to create a TagsGroup instance with async data fetching
+  static async build<T extends 'posts' | 'articles' | 'writeups' = 'posts'>(
+    posts?: CollectionEntry<T>[],
+    collectionName?: T,
+  ): Promise<TagsGroup<T>> {
+    let sortedPosts: CollectionEntry<T>[]
+    if (posts) {
+      sortedPosts = posts
+    } else if (collectionName) {
+      sortedPosts = await getSortedPosts(collectionName) as CollectionEntry<T>[]
+    } else {
+      // Get all posts from all collections
+      sortedPosts = await getAllSortedPosts() as CollectionEntry<T>[]
+    }
+    const tagsGroup = new TagsGroup<T>('Tags', '/tags', [])
     sortedPosts.forEach((post) => {
       const frontmatterTags = post.data.tags || []
       frontmatterTags.forEach((tag) => {
@@ -320,9 +355,9 @@ export class TagsGroup extends PostsCollationGroup {
   }
 }
 
-export function getPostSequenceContext(
-  post: CollectionEntry<'posts'>,
-  posts: CollectionEntry<'posts'>[],
+export function getPostSequenceContext<T extends 'posts' | 'articles' | 'writeups'>(
+  post: CollectionEntry<T>,
+  posts: CollectionEntry<T>[],
 ) {
   const index = posts.findIndex((p) => p.id === post.id)
   const prev = index > 0 ? posts[index - 1] : undefined
