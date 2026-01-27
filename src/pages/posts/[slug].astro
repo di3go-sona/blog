@@ -1,17 +1,17 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Layout from '~/layouts/Layout.astro'
-import { SeriesGroup, TagsGroup, getSortedPosts, getPostSequenceContext } from '~/utils'
+import { SeriesGroup, TagsGroup, getAllSortedPosts, getPostSequenceContext } from '~/utils'
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import PostAddendum from '~/components/PostAddendum.astro'
 import type { Collation } from '~/types'
 import PostDetail from '~/components/PostDetail.astro'
 
 export const getStaticPaths = (async () => {
-  const posts = await getSortedPosts('posts')
+  const posts = await getAllSortedPosts()
   return posts.map((post) => {
     // Get sequence context for the post
-    const { prev, next } = getPostSequenceContext(post, posts)
+    const { prev, next } = getPostSequenceContext(post as any, posts as any)
     return {
       params: { slug: post.id },
       props: { post, prev, next },
@@ -32,25 +32,28 @@ if (addendum.length > 0) {
   addendumAvatarImage = addendumEntry.data.avatarImage
 }
 
-const sortedPosts = await getSortedPosts('posts')
+const sortedPosts = await getAllSortedPosts()
+
+// Determine the collection type
+const collectionType = post.collection as 'posts' | 'articles' | 'writeups'
 
 // Get series posts if this post is part of a series
 let series: Collation<any> | undefined
 let nextPostInSeries: CollectionEntry<'posts' | 'articles' | 'writeups'> | undefined
 if (postData.series) {
-  const seriesGroup = await SeriesGroup.build(sortedPosts as any, 'posts')
+  const seriesGroup = await SeriesGroup.build(sortedPosts as any)
   series = seriesGroup.match(postData.series)
   if (!series) {
     // This should not happen if series data is correct
     throw new Error(`Series "${postData.series}" not found`)
   }
-  const sequenceContext = getPostSequenceContext(post, series.entries as any)
+  const sequenceContext = getPostSequenceContext(post as any, series.entries as any)
   nextPostInSeries = sequenceContext.next as CollectionEntry<'posts' | 'articles' | 'writeups'>
 }
 
 let tags: Collation<any>[] | undefined
 if (postData.tags && postData.tags.length > 0) {
-  const tagsGroup = await TagsGroup.build(sortedPosts as any, 'posts')
+  const tagsGroup = await TagsGroup.build(sortedPosts as any)
   tags = tagsGroup.matchMany(postData.tags)
 }
 ---
@@ -70,7 +73,7 @@ if (postData.tags && postData.tags.length > 0) {
     series={series}
     nextPostInSeries={nextPostInSeries}
     tags={tags}
-    collectionType="posts"
+    collectionType={collectionType}
   />
   {
     AddendumContent && (
