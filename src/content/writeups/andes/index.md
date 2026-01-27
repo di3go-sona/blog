@@ -1,6 +1,6 @@
 ---
-ctf: LakeCTF 2022
 published: 2022-11-11
+series: LakeCTF 2022
 tags:
 - Blockchain
 title: Andes

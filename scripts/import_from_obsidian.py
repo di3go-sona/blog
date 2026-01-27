@@ -50,8 +50,15 @@ if __name__ == "__main__":
                     new_file_frontmatter = {}
                     new_file_frontmatter['title'] = filename
                     new_file_frontmatter['published'] = file_frontmatter['Created']
-                    if 'CTF' in file_frontmatter:
-                        new_file_frontmatter['ctf'] = file_frontmatter['CTF']
+                    
+                    # Handle series: if 'part' exists, it's a series
+                    # For CTFs, use the 'CTF' field as the series name
+                    if 'part' in file_frontmatter or 'Part' in file_frontmatter:
+                        if 'CTF' in file_frontmatter:
+                            new_file_frontmatter['series'] = file_frontmatter['CTF']
+                        elif 'ctf' in file_frontmatter:
+                            new_file_frontmatter['series'] = file_frontmatter['ctf']
+                    
                     if 'Tags' in file_frontmatter:
                         new_file_frontmatter['tags'] = [f.replace('#', '') for f in file_frontmatter['Tags']]
                     if 'tags' in file_frontmatter:

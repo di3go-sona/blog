@@ -3,14 +3,27 @@ import Layout from '~/layouts/Layout.astro'
 import { getAllSortedPosts } from '~/utils'
 import PageHeader from '~/components/PageHeader.astro'
 import TagsSection from '~/components/TagsSection.astro'
+import SeriesSection from '~/components/SeriesSection.astro'
 import BlockHeader from '~/components/BlockHeader.astro'
 
 const sortedPosts = await getAllSortedPosts()
+const postsHaveSeries = sortedPosts.some((post) => post.data.series)
 ---
 
-<Layout title="Tags" description="Browse all tags">
+<Layout title="Tags" description="Browse all tags and series">
   <div class="mt-2 sm:mt-0">
     <PageHeader titlePieces={['tags']} />
-    <TagsSection posts={sortedPosts} />
+    <section>
+      <BlockHeader>Tags</BlockHeader>
+      <TagsSection posts={sortedPosts} />
+    </section>
+    {
+      postsHaveSeries && (
+        <section>
+          <BlockHeader>Series</BlockHeader>
+          <SeriesSection posts={sortedPosts} />
+        </section>
+      )
+    }
   </div>
 </Layout>

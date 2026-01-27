@@ -1,11 +1,14 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Layout from '~/layouts/Layout.astro'
-import { getAllSortedPosts } from '~/utils'
+import { getAllSortedPosts, TagsGroup, SeriesGroup } from '~/utils'
 import Pagination from '~/components/Pagination.astro'
 import siteConfig from '~/site.config'
 import PostPreview from '~/components/PostPreview.astro'
 import PageHeader from '~/components/PageHeader.astro'
+import TagsSection from '~/components/TagsSection.astro'
+import SeriesSection from '~/components/SeriesSection.astro'
+import BlockHeader from '~/components/BlockHeader.astro'
 
 // Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
 export const getStaticPaths = (async ({ paginate }) => {
@@ -15,11 +18,19 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { page } = Astro.props
 const pageTitle = 'Archive' + (page.currentPage > 1 ? ` - Page ${page.currentPage}` : '')
+
+const allPosts = await getAllSortedPosts()
+const tagsGroup = new TagsGroup(allPosts as any)
+const seriesGroup = new SeriesGroup(allPosts as any)
 ---
 
 <Layout title={pageTitle} description="All posts in the archive">
   <div class="mt-2 sm:mt-0">
     <PageHeader />
+    <BlockHeader name="Tags" />
+    <TagsSection tagsGroup={tagsGroup} />
+    <BlockHeader name="Series" />
+    <SeriesSection seriesGroup={seriesGroup} />
     {page.data.map((post) => <PostPreview post={post} />)}
     <Pagination
       prevLink={page.url.prev ? page.url.prev : undefined}

@@ -1,6 +1,6 @@
 ---
-ctf: CyberApocalypse 2025
 published: 2025-04-03
+series: CyberApocalypse 2025
 tags:
 - Blockchain
 title: Eldoria Gate
