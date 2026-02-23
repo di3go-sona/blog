@@ -215,7 +215,7 @@ export async function resolveThemeColorStyles(
 }
 
 export async function getSortedPosts(
-  collectionName: 'posts' | 'articles' | 'writeups' = 'posts',
+  collectionName: 'posts' | 'articles' | 'writeups' | 'projects' = 'posts',
 ) {
   const allPosts = await getCollection(collectionName, ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true
@@ -227,17 +227,18 @@ export async function getSortedPosts(
 }
 
 export async function getAllSortedPosts() {
-  const [posts, articles, writeups] = await Promise.all([
+  const [posts, articles, writeups, projects] = await Promise.all([
     getSortedPosts('posts'),
     getSortedPosts('articles'),
     getSortedPosts('writeups'),
+    getSortedPosts('projects'),
   ])
-  return [...posts, ...articles, ...writeups].sort((a, b) => {
+  return [...posts, ...articles, ...writeups, ...projects].sort((a, b) => {
     return a.data.published < b.data.published ? -1 : 1
   })
 }
 
-abstract class PostsCollationGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> implements CollationGroup<T> {
+abstract class PostsCollationGroup<T extends 'posts' | 'articles' | 'writeups' | 'projects' = 'posts'> implements CollationGroup<T> {
   title: string
   url: string
   collations: Collation<T>[]
@@ -294,13 +295,13 @@ abstract class PostsCollationGroup<T extends 'posts' | 'articles' | 'writeups' =
   }
 }
 
-export class SeriesGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> extends PostsCollationGroup<T> {
+export class SeriesGroup<T extends 'posts' | 'articles' | 'writeups' | 'projects' = 'posts'> extends PostsCollationGroup<T> {
   // Private constructor to enforce the use of the static build method
   private constructor(title: string, url: string, items: Collation<T>[]) {
     super(title, url, items)
   }
   // Factory method to create a SeriesGroup instance with async data fetching
-  static async build<T extends 'posts' | 'articles' | 'writeups' = 'posts'>(
+  static async build<T extends 'posts' | 'articles' | 'writeups' | 'projects' = 'posts'>(
     posts?: CollectionEntry<T>[],
     collectionName?: T,
   ): Promise<SeriesGroup<T>> {
@@ -324,14 +325,14 @@ export class SeriesGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> 
   }
 }
 
-export class TagsGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> extends PostsCollationGroup<T> {
+export class TagsGroup<T extends 'posts' | 'articles' | 'writeups' | 'projects' = 'posts'> extends PostsCollationGroup<T> {
   // Private constructor to enforce the use of the static build method
   private constructor(title: string, url: string, items: Collation<T>[]) {
     super(title, url, items)
   }
 
   // Factory method to create a TagsGroup instance with async data fetching
-  static async build<T extends 'posts' | 'articles' | 'writeups' = 'posts'>(
+  static async build<T extends 'posts' | 'articles' | 'writeups' | 'projects' = 'posts'>(
     posts?: CollectionEntry<T>[],
     collectionName?: T,
   ): Promise<TagsGroup<T>> {
@@ -355,7 +356,7 @@ export class TagsGroup<T extends 'posts' | 'articles' | 'writeups' = 'posts'> ex
   }
 }
 
-export function getPostSequenceContext<T extends 'posts' | 'articles' | 'writeups'>(
+export function getPostSequenceContext<T extends 'posts' | 'articles' | 'writeups' | 'projects'>(
   post: CollectionEntry<T>,
   posts: CollectionEntry<T>[],
 ) {

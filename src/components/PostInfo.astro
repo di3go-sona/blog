@@ -4,7 +4,7 @@ import { render, type CollectionEntry } from 'astro:content'
 import type { Collation } from '~/types'
 
 interface Props {
-  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  post: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
   class?: string
 }
 
@@ -55,6 +55,18 @@ if (seriesFrontmatter) {
           <span class="before:content-['·'] before:inline-block before:mx-0.5">
             {minutesRead}
           </span>
+        )
+      }
+      {
+        post.data.github && (
+          <a
+            href={post.data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="before:content-['·'] before:inline-block before:mx-0.5 hover:underline"
+          >
+            GitHub
+          </a>
         )
       }
     </div>

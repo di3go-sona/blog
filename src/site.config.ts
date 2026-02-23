@@ -48,6 +48,10 @@ const config: SiteConfig = {
       name: ' CTF Writeups ',
       url: '/writeups',
     },
+    {
+      name: ' Projects ',
+      url: '/projects',
+    },
     // {
     //   name: ' Index ',
     //   url: '/tags',

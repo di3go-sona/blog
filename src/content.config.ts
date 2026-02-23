@@ -18,6 +18,7 @@ const postSchema = ({ image }: { image: any }) =>
       })
       .optional(),
     toc: z.boolean().optional().default(true),
+    github: z.string().optional(),
   })
 
 const postsCollection = defineCollection({
@@ -32,6 +33,11 @@ const articlesCollection = defineCollection({
 
 const writeupsCollection = defineCollection({
   loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/writeups' }),
+  schema: postSchema,
+})
+
+const projectsCollection = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/projects' }),
   schema: postSchema,
 })
 
@@ -66,6 +72,7 @@ export const collections = {
   posts: postsCollection,
   articles: articlesCollection,
   writeups: writeupsCollection,
+  projects: projectsCollection,
   home: homeCollection,
   addendum: addendumCollection,
 }

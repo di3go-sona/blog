@@ -35,11 +35,11 @@ if (addendum.length > 0) {
 const sortedPosts = await getAllSortedPosts()
 
 // Determine the collection type
-const collectionType = post.collection as 'posts' | 'articles' | 'writeups'
+const collectionType = post.collection as 'posts' | 'articles' | 'writeups' | 'projects'
 
 // Get series posts if this post is part of a series
 let series: Collation<any> | undefined
-let nextPostInSeries: CollectionEntry<'posts' | 'articles' | 'writeups'> | undefined
+let nextPostInSeries: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'> | undefined
 if (postData.series) {
   const seriesGroup = await SeriesGroup.build(sortedPosts as any)
   series = seriesGroup.match(postData.series)
@@ -48,7 +48,7 @@ if (postData.series) {
     throw new Error(`Series "${postData.series}" not found`)
   }
   const sequenceContext = getPostSequenceContext(post as any, series.entries as any)
-  nextPostInSeries = sequenceContext.next as CollectionEntry<'posts' | 'articles' | 'writeups'>
+  nextPostInSeries = sequenceContext.next as CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
 }
 
 let tags: Collation<any>[] | undefined

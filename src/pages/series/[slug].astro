@@ -6,7 +6,7 @@ import PageHeader from '~/components/PageHeader.astro'
 import PostPreview from '~/components/PostPreview.astro'
 
 export const getStaticPaths = (async () => {
-  // Build series from all collections (posts, articles, and writeups)
+  // Build series from all collections (posts, articles, writeups, and projects)
   const seriesGroup = await SeriesGroup.build()
   return seriesGroup.collations.map((series) => {
     return {

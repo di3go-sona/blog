@@ -8,7 +8,7 @@ import type { Collation } from '~/types'
 import { TagsGroup } from '~/utils'
 
 interface Props {
-  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  post: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
 }
 
 const { post } = Astro.props
@@ -18,7 +18,12 @@ const collectionType = 'collection' in post ? post.collection : 'posts'
 const baseUrl = `/${collectionType}`
 
 // Set emoji based on collection type
-const collectionEmoji = collectionType === 'writeups' ? '🚩' : '📄'
+const collectionEmoji =
+  collectionType === 'writeups'
+    ? '🚩'
+    : collectionType === 'projects'
+      ? '🛠️'
+      : '📄'
 
 const { remarkPluginFrontmatter } = await render(post)
 const description = remarkPluginFrontmatter.description || post.data.description

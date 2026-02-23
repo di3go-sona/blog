@@ -13,15 +13,15 @@ import ScrollUpButton from './ScrollUpButton.astro'
 import ChevronsRight from '~/icons/chevrons-right.svg'
 
 interface Props {
-  post: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  post: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
   Content: any
   headings: any[]
-  prev?: CollectionEntry<'posts' | 'articles' | 'writeups'>
-  next?: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  prev?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
+  next?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
   series?: Collation<any>
-  nextPostInSeries?: CollectionEntry<'posts' | 'articles' | 'writeups'>
+  nextPostInSeries?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
   tags?: Collation<any>[]
-  collectionType: 'posts' | 'articles' | 'writeups'
+  collectionType: 'posts' | 'articles' | 'writeups' | 'projects'
 }
 
 const { 

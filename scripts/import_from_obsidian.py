@@ -4,13 +4,15 @@ import shutil
 import yaml
 
 OBSIDIAN_VAULT_PATH = '/Users/di3go/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/'
-ASTRO_CONTENT_PATH = '/Users/di3go/Projects/blog-astro/src/content'
+ASTRO_CONTENT_PATH = '/Users/di3go/Projects/blog/src/content'
 OBSIDIAN_PAGES_PATH = f"{OBSIDIAN_VAULT_PATH}/Pages"
 OBSIDIAN_ASSETS_PATH = f"{OBSIDIAN_VAULT_PATH}/Assets"
 FOLDERS_MAPPING = {
     f"{OBSIDIAN_PAGES_PATH}/Blog/Articles": f"{ASTRO_CONTENT_PATH}/articles",
-    f"{OBSIDIAN_PAGES_PATH}/Blog/Writeups": f"{ASTRO_CONTENT_PATH}/writeups"
+    f"{OBSIDIAN_PAGES_PATH}/Blog/Writeups": f"{ASTRO_CONTENT_PATH}/writeups",
+    f"{OBSIDIAN_PAGES_PATH}/Blog/Projects": f"{ASTRO_CONTENT_PATH}/projects"
 }
+
 
 def list_documents(path):
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
@@ -63,6 +65,11 @@ if __name__ == "__main__":
                         new_file_frontmatter['tags'] = [f.replace('#', '') for f in file_frontmatter['Tags']]
                     if 'tags' in file_frontmatter:
                         new_file_frontmatter['tags'] = [f.replace('#', '') for f in file_frontmatter['tags']]
+
+                    if 'Github' in file_frontmatter:
+                        new_file_frontmatter['github'] = file_frontmatter['Github']
+                    if 'github' in file_frontmatter:
+                        new_file_frontmatter['github'] = file_frontmatter['github']
 
 
                     new_file_frontmatter_yaml = f"---\n{yaml.dump(new_file_frontmatter)}\n---\n"
