@@ -1,16 +1,17 @@
+#! /Users/di3go/Projects/blog/scripts/.venv/bin/python3 
 import re
 import os
 import shutil
 import yaml
 
-OBSIDIAN_VAULT_PATH = '/Users/di3go/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/'
+OBSIDIAN_VAULT_PATH = '/Users/di3go/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault'
 ASTRO_CONTENT_PATH = '/Users/di3go/Projects/blog/src/content'
-OBSIDIAN_PAGES_PATH = f"{OBSIDIAN_VAULT_PATH}/Pages"
+OBSIDIAN_PAGES_PATH = f"{OBSIDIAN_VAULT_PATH}/Pages/🖋️ Blog"
 OBSIDIAN_ASSETS_PATH = f"{OBSIDIAN_VAULT_PATH}/Assets"
 FOLDERS_MAPPING = {
-    f"{OBSIDIAN_PAGES_PATH}/Blog/Articles": f"{ASTRO_CONTENT_PATH}/articles",
-    f"{OBSIDIAN_PAGES_PATH}/Blog/Writeups": f"{ASTRO_CONTENT_PATH}/writeups",
-    f"{OBSIDIAN_PAGES_PATH}/Blog/Projects": f"{ASTRO_CONTENT_PATH}/projects"
+    f"{OBSIDIAN_PAGES_PATH}/Articles": f"{ASTRO_CONTENT_PATH}/articles",
+    f"{OBSIDIAN_PAGES_PATH}/Writeups": f"{ASTRO_CONTENT_PATH}/writeups",
+    f"{OBSIDIAN_PAGES_PATH}/Projects": f"{ASTRO_CONTENT_PATH}/projects"
 }
 
 
@@ -81,6 +82,8 @@ if __name__ == "__main__":
                 attachment_matches = re.finditer(r'[!]\[\[(.*?)([|](.*?))?\]\]', file_content)
                 for attachment_match in attachment_matches:
                     attachment_name = attachment_match.group(1)
+                    if attachment_name.startswith('Assets/'):
+                        attachment_name = attachment_name[7:]
                     print(f"Processing attachment: {attachment_name}")
                     source_attachment_path = os.path.join(OBSIDIAN_ASSETS_PATH, attachment_name)
                     target_attachment_path = os.path.join(target_dirpath, attachment_name)
