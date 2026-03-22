@@ -1,8 +1,8 @@
 ---
 published: 2025-08-18
 tags:
-- Homelab
-title: How I moved my blog to Obsidian
+- Blogging
+title: Why I moved my blog from Notion to Obsidian
 
 ---
 
@@ -56,7 +56,7 @@ My toolchain this time looks something like this:
 - [Cloudflare](https://cloudflare.com) to build, deploy and host the website
 
 And 75 lines of python code that allows me to move content from obsidian to astro content folder with some links.
-There were better ways to achieve this for sure, you can use github pipelines, or maybe some notinon plugin, and so on...
+There were better ways to achieve this for sure, you can use github pipelines, or maybe some Obsidian plugin, and so on...
 
 But nothing will ever give you the simplicity and customization level that you can achieve with a few lines of python
 

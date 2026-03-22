@@ -3,7 +3,6 @@ import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import type { Collation } from '~/types'
 import PostInfo from './PostInfo.astro'
-import Tags from './Tags.astro'
 import TableOfContents from './TableOfContents.astro'
 import DividerText from './DividerText.astro'
 import PostPreview from './PostPreview.astro'
@@ -58,14 +57,7 @@ const baseUrl = `/${collectionType}`
       # {postData.title}
     </h1>
     <div class="my-2 border-l-2 border-accent/80 pl-4 py-2">
-      <PostInfo post={post} class="mb-1" />
-      {
-        tags && (
-          <div class="mt-4">
-            <Tags tags={tags} />
-          </div>
-        )
-      }
+      <PostInfo post={post} tags={tags} class="mb-1" />
     </div>
   </div>
   <!-- <hr class="border-accent/10 border-2 rounded-xl hidden lg:block" /> -->

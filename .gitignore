@@ -1,5 +1,6 @@
 # build output
 dist/
+.wrangler/state/v3/cache
 
 # generated types
 .astro/
@@ -27,3 +28,4 @@ pnpm-debug.log*
 venv/
 .cache/
 __pycache__/
+
