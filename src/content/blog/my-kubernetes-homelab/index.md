@@ -6,7 +6,6 @@ tags:
   - "null"
 ---
 
-type: article
 *A* while ago I tried to setup my kubernetes Homelab based on docker [My Homelab setup](/blog/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
 
 In particular, I really wanted to throw Kubernetes into the mix, both as a learning experience and because its orchestration layer makes sense even outside the cloud native environment.

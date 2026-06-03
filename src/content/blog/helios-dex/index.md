@@ -7,7 +7,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 HeliosDex is the second bloackchain challenge from HTB’s CyberApocaypse, this one was a funny one, three different ERC20 coins and 3 conversion function with weird roundings and a function to redeem the jackpot once you exploit the conversion error
 
 ```Solidity

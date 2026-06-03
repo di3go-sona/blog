@@ -6,7 +6,6 @@ tags:
   - AI
 ---
 
-type: article
 ## Babelian Meetings
 
 If you are into data science, you have probably become accustomed to the usual "prepare, train, evaluate" cycle of machine learning projects.

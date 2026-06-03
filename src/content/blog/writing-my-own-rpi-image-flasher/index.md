@@ -9,7 +9,6 @@ github:
   - https://github.com/di3go-sona/rpi-flasher
 ---
 
-type: project
 I wanted to build my own Kubernetes Homelab, but, as in my job I deal with Bare Metal provisioning on a daily basis I felt quite stupid having to manually flash 5 images, so, instead of wasting a few hours now and then, why not _invest_ a few weeks to create my own RPi image builder.
 
 Did it save time ? Maybe, probably not yet, but it surprisingly save me a lot of time already 

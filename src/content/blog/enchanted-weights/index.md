@@ -7,7 +7,6 @@ tags:
   - AI
 ---
 
-type: writeup
 This was just a warmup misc, we are provided with a `eldorian_artifact.pth`, just load it up with pytorch, have a look at the weights
 
 ```Python

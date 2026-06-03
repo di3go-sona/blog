@@ -6,7 +6,6 @@ tags:
   - Cybersecurity
 ---
 
-type: article
 **The day is March 28th, 2024.**
 
 I woke up, checked my phone, and noticed an unusual number of messages in the group chat—especially for a Saturday morning.
@@ -143,8 +142,6 @@ I haven’t yet gone deep into what the backdoor _actually_ does, but here are
 - [https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504](https://gist.github.com/smx-smx/a6112d54777845d389bd7126d6e9f504)
 
 ---
-type: article
-
 ## Post-mortem reflections
 
 - This was close. Too close. And we can't even assume this was the first—or the last- for what is worth. It's simply the first large-scale attack **we've actually caught**.

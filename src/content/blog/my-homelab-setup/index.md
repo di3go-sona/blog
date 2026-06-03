@@ -6,7 +6,6 @@ tags:
   - Homelab
 ---
 
-type: article
 Since I started my career in Computer Science I always had an attraction towards dashboards and monitoring systems, it always gave me a sense of order and control. I’ve been lurking in the shadows of [r/homelab](https://www.reddit.com/r/homelab/) and [r/minilab](https://www.reddit.com/r/minilab/) for quite a while now, waiting to have enough cash to build my shiny personal homelab.
 
 This until I decided to stop procrastinating and let’s start doing, so I just decided to buy a 10 inch rack to store all my hardware in a single place

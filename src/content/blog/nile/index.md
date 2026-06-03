@@ -7,7 +7,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 Nile is the first of the two CTF challenges featured in the LakeCTF 2022.
 
 The challenge is quite straightforward, we have a vulnerable contract deployed on the Goerli testnet

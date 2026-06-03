@@ -2,7 +2,6 @@
 import { dateString, SeriesGroup } from '~/utils'
 import { render, type CollectionEntry } from 'astro:content'
 import type { Collation } from '~/types'
-import GithubIcon from '~/icons/github.svg'
 
 interface Props {
   post: CollectionEntry<'blog'>
@@ -21,24 +20,11 @@ if (seriesFrontmatter) {
   const seriesGroup = await SeriesGroup.build()
   series = seriesGroup.match(seriesFrontmatter)
   if (!series) {
-    // This should never happen if the series data is correct
     throw new Error(`Series "${seriesFrontmatter}" not found`)
   }
   seriesPostNumber = series.entries.findIndex((p: any) => p.id === post.id) + 1
   seriesTotal = series.entries.length
 }
-
-const githubLinks = post.data.github && post.data.github.length > 0
-  ? post.data.github.map((url: string) => {
-      try {
-        const parsed = new URL(url)
-        const repoPath = parsed.pathname.replace(/^\/+/, '').replace(/\/+$/, '')
-        return { url, label: repoPath }
-      } catch {
-        return { url, label: url }
-      }
-    })
-  : []
 ---
 
 <div class:list={[className, 'text-foreground/80']}>
@@ -83,26 +69,6 @@ const githubLinks = post.data.github && post.data.github.length > 0
                 class="py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
               >
                 {tag.title}
-              </a>
-            ))}
-          </dd>
-        </dl>
-      )
-    }
-    {
-      githubLinks.length > 0 && (
-        <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm items-baseline">
-          <dt class="font-medium pt-1">GitHub:</dt>
-          <dd class="flex flex-wrap gap-3">
-            {githubLinks.map((link: { url: string; label: string }) => (
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
-              >
-                <GithubIcon class="size-4" />
-                {link.label}
               </a>
             ))}
           </dd>

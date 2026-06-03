@@ -6,8 +6,6 @@ tags:
   - Homelab
 ---
 
-type: article
-
 ## Introduction
 
 Several Christmases ago, I got a 6TB HDD without a NAS. At first, I thought it was a bummer—so much storage, yet being forced to access it with a rather short USB cable.

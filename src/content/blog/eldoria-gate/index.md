@@ -7,7 +7,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 EldoriaGate is the third blockchain challenge for HTB’s CTF, it consist of two files:  
   
   

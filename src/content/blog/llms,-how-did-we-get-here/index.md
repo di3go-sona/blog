@@ -6,7 +6,6 @@ tags:
   - AI
 ---
 
-type: article
 The idea behind this post was born after I attended an amazing talk by Lukasz Kaiser, one of the folks behind Attention Is All You Need.
 
 He talked about how, from the inside, the whole transformer revolution felt a lot more incremental, almost natural than what the public opinion perceived

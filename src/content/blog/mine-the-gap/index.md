@@ -6,7 +6,6 @@ tags:
   - Misc
 ---
 
-type: writeup
 Even if I’m not fully into Cybersec anymore I still enjoy testing my skills with CTFs from time to time ( especially along the wonderful Hackappatoi team ) !
 
 This challenge was quite fun and easy, you are given a simple python program that uses `pygame` to render a huge minesweeper board ( with a couple million cells )

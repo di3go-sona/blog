@@ -6,7 +6,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 It has been a while since my last CTF but I decided to join the HTB’s CyberApocalypse 2024.  
   
 This challenge was pretty easy but also engaging, we have two contracts:  

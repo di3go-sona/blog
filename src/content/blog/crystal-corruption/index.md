@@ -7,7 +7,6 @@ tags:
   - AI
 ---
 
-type: writeup
 This was the second Machine Learning challenge from HTB’s cyber apocalypse CTF and probably the one I enjoyed the most, in fact we are given a `resnet18.pth` and when we load it in the same way as the previous challenge we get immediately pwned, wow
 
 ```Python

@@ -7,7 +7,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 As tradition, also this year I joined Hack the Box’s CTF and this was the first blockchain
 
 ```Solidity

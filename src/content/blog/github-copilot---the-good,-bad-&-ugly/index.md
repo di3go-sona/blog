@@ -6,7 +6,6 @@ tags:
   - AI
 ---
 
-type: article
 I’ve been using Copilot for almost three months now, and I feel confident enough to say that **it is a game-changer** indeed, but not in the way you might think !
 
 My hype curve when I first tried it on was something like this

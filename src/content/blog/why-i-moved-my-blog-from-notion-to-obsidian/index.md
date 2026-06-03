@@ -6,7 +6,6 @@ tags:
   - Blogging
 ---
 
-type: article
 I started blogging around 3 years ago, at that time I was using Notion as my main knowledge tracking tool. It was the new kid around the block and I admit it does work pretty well.
 
 As I am a deep believer of 'less is more', it was a natural decision to use Notion as my blogging platform as well, and I basically had 5 options:

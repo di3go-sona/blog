@@ -7,7 +7,6 @@ tags:
   - Blockchain
 ---
 
-type: writeup
 Andes is the second of the two Web3 challenges featured in the LakeCTF 2022.
 
 At a first glance the contract may seem extremely lengthy and quirky
