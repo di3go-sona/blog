@@ -3,7 +3,7 @@ title: My Kubernetes Homelab
 published: 2026-06-03
 type: article
 tags:
-  - "null"
+  - Homelab
 ---
 
 *A* while ago I tried to setup my kubernetes Homelab based on docker [My Homelab setup](/blog/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
