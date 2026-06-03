@@ -1,9 +1,8 @@
 ---
+title: The day we almost got all backdoored
 published: 2024-04-01
 tags:
-- Cybersecurity
-title: The day we almost got all backdoored
-
+  - Cybersecurity
 ---
 
 **The day is March 28th, 2024.**

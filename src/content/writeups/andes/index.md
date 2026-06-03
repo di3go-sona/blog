@@ -1,10 +1,9 @@
 ---
+title: Andes
 published: 2022-11-11
 series: LakeCTF 2022
 tags:
-- Blockchain
-title: Andes
-
+  - Blockchain
 ---
 
 Andes is the second of the two Web3 challenges featured in the LakeCTF 2022.

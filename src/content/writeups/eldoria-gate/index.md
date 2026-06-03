@@ -1,10 +1,9 @@
 ---
+title: Eldoria Gate
 published: 2025-04-03
 series: CyberApocalypse 2025
 tags:
-- Blockchain
-title: Eldoria Gate
-
+  - Blockchain
 ---
 
 EldoriaGate is the third blockchain challenge for HTB’s CTF, it consist of two files:  

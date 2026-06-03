@@ -1,9 +1,8 @@
 ---
+title: Why I moved my blog from Notion to Obsidian
 published: 2025-08-18
 tags:
-- Blogging
-title: Why I moved my blog from Notion to Obsidian
-
+  - Blogging
 ---
 
 I started blogging around 3 years ago, at that time I was using Notion as my main knowledge tracking tool. It was the new kid around the block and I admit it does work pretty well.

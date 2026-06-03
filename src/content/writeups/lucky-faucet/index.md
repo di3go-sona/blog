@@ -1,9 +1,8 @@
 ---
+title: Lucky Faucet
 published: 2024-03-16
 tags:
-- Blockchain
-title: Lucky Faucet
-
+  - Blockchain
 ---
 
 It has been a while since my last CTF but I decided to join the HTB’s CyberApocalypse 2024.  

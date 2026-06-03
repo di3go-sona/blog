@@ -1,10 +1,9 @@
 ---
+title: Nile
 published: 2022-11-11
 series: LakeCTF 2022
 tags:
-- Blockchain
-title: Nile
-
+  - Blockchain
 ---
 
 Nile is the first of the two CTF challenges featured in the LakeCTF 2022.

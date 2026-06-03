@@ -1,9 +1,8 @@
 ---
+title: Export NFS shares from RPi and automount on macOS
 published: 2026-03-22
 tags:
-- Homelab
-title: Export NFS shares from RPi and automount on macOS
-
+  - Homelab
 ---
 
 

@@ -1,9 +1,8 @@
 ---
+title: My Homelab setup
 published: 2025-07-21
 tags:
-- Homelab
-title: My Homelab setup
-
+  - Homelab
 ---
 
 Since I started my career in Computer Science I always had an attraction towards dashboards and monitoring systems, it always gave me a sense of order and control. I’ve been lurking in the shadows of [r/homelab](https://www.reddit.com/r/homelab/) and [r/minilab](https://www.reddit.com/r/minilab/) for quite a while now, waiting to have enough cash to build my shiny personal homelab.
@@ -12,7 +11,7 @@ This until I decided to stop procrastinating and let’s start doing, so I just 
 
 ## Hardware
 
-![homelab_3.jpeg](./homelab_3.jpeg)
+![200](./homelab_3.jpeg)
 
 I already had a few Raspberry Pi’s laying around, a pocket router and a repeater.
 Maybe it was already enough to get started, but I decided to buy a new 8GB Ram Pi 5 to have a bit more computational power ( honestly I just wanted one to try it out )

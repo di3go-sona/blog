@@ -1,10 +1,9 @@
 ---
+title: Eldorion
 published: 2025-04-02
 series: CyberApocalypse 2025
 tags:
-- Blockchain
-title: Eldorion
-
+  - Blockchain
 ---
 
 As tradition, also this year I joined Hack the Box’s CTF and this was the first blockchain

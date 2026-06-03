@@ -1,9 +1,8 @@
 ---
+title: Github Copilot - The Good, Bad & Ugly
 published: 2023-07-21
 tags:
-- AI
-title: Github Copilot - The Good, Bad & Ugly
-
+  - AI
 ---
 
 I’ve been using Copilot for almost three months now, and I feel confident enough to say that **it is a game-changer** indeed, but not in the way you might think !

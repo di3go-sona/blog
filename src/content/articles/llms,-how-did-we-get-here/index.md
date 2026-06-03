@@ -1,9 +1,8 @@
 ---
+title: LLMs, How did we get here
 published: 2025-05-30
 tags:
-- AI
-title: LLMs, How did we get here
-
+  - AI
 ---
 
 The idea behind this post was born after I attended an amazing talk by Lukasz Kaiser, one of the folks behind Attention Is All You Need.

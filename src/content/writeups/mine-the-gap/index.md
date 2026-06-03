@@ -1,9 +1,8 @@
 ---
+title: Mine the gap
 published: 2023-06-30
 tags:
-- Misc
-title: Mine the gap
-
+  - Misc
 ---
 
 Even if I’m not fully into Cybersec anymore I still enjoy testing my skills with CTFs from time to time ( especially along the wonderful Hackappatoi team ) !
