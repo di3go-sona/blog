@@ -18,7 +18,7 @@ const postSchema = ({ image }: { image: any }) =>
       })
       .optional(),
     toc: z.boolean().optional().default(true),
-    github: z.string().optional(),
+    github: z.array(z.string()).optional().default([]),
   })
 
 const postsCollection = defineCollection({

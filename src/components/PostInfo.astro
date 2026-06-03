@@ -27,6 +27,18 @@ if (seriesFrontmatter) {
   seriesPostNumber = series.entries.findIndex((p: any) => p.id === post.id) + 1
   seriesTotal = series.entries.length
 }
+
+const githubLinks = post.data.github && post.data.github.length > 0
+  ? post.data.github.map((url: string) => {
+      try {
+        const parsed = new URL(url)
+        const repoPath = parsed.pathname.replace(/^\/+/, '').replace(/\/+$/, '')
+        return { url, label: repoPath }
+      } catch {
+        return { url, label: url }
+      }
+    })
+  : []
 ---
 
 <div class:list={[className, 'text-foreground/80']}>
@@ -59,22 +71,6 @@ if (seriesFrontmatter) {
           )
         }
       </div>
-      {
-        post.data.github && (
-          <>
-            <span class="text-foreground/80">·</span>
-            <a
-              href={post.data.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="shrink-0 inline-flex items-center gap-1.5 rounded-2xl py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 text-sm transition-colors"
-            >
-              <GithubIcon class="size-4" />
-              GitHub
-            </a>
-          </>
-        )
-      }
     </div>
     {
       tags && tags.length > 0 && (
@@ -87,6 +83,26 @@ if (seriesFrontmatter) {
                 class="py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
               >
                 {tag.title}
+              </a>
+            ))}
+          </dd>
+        </dl>
+      )
+    }
+    {
+      githubLinks.length > 0 && (
+        <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm items-baseline">
+          <dt class="font-medium pt-1">GitHub:</dt>
+          <dd class="flex flex-wrap gap-3">
+            {githubLinks.map((link: { url: string; label: string }) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
+              >
+                <GithubIcon class="size-4" />
+                {link.label}
               </a>
             ))}
           </dd>

@@ -5,7 +5,7 @@ tags:
   - "null"
 ---
 
-*A* while ago I tried to setup my kubernetes Homelab based on docker [[Pages/🖋️ Blog/Articles/My Homelab setup]], it was an interesting journey for sure but there were too many issues. 
+*A* while ago I tried to setup my kubernetes Homelab based on docker [My Homelab setup](/articles/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
 
 In particular, I really wanted to throw Kubernetes into the mix, both as a learning experience and because its orchestration layer makes sense even outside the cloud native environment.
 
@@ -23,7 +23,7 @@ This time I looked around a bit more, someone mentioned to me [HomelabOS](https:
 
 Given my appreciation for minimalism I fell in love with [DietPi](https://dietpi.com) as it comes bundled with absolutely nothing, here is how it looks out of the box. It doesn't even have an ntp daemon! ![homelab_4.png](./homelab_4.png)
 
-Also given that I have 5 SD cards to flash with some settings to customize I ended up [[Pages/🖋️ Blog/Projects/Writing my own RPi image flasher]].
+Also given that I have 5 SD cards to flash with some settings to customize I ended up [Writing my own RPi image flasher](/projects/writing-my-own-rpi-image-flasher).
 
 The last decision is about which kubernetes distro to use, my top 3 contenders would be:
 - vanilla k8s with `kubeadm` or `kubespray` to deploy them

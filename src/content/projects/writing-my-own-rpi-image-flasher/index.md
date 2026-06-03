@@ -4,7 +4,8 @@ published: 2026-02-23
 tags:
   - Homelab
   - RPi
-github: https://github.com/di3go-sona/rpi-flasher
+github:
+  - https://github.com/di3go-sona/rpi-flasher
 ---
 
 I wanted to build my own Kubernetes Homelab, but, as in my job I deal with Bare Metal provisioning on a daily basis I felt quite stupid having to manually flash 5 images, so, instead of wasting a few hours now and then, why not _invest_ a few weeks to create my own RPi image builder.
