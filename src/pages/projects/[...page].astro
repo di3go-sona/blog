@@ -7,10 +7,10 @@ import siteConfig from '~/site.config'
 import PostPreview from '~/components/PostPreview.astro'
 import PageHeader from '~/components/PageHeader.astro'
 
-// Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
 export const getStaticPaths = (async ({ paginate }) => {
-  const sortedPosts = await getSortedPosts('projects')
-  return paginate(sortedPosts.reverse(), { pageSize: siteConfig.pageSize })
+  const allPosts = await getSortedPosts('blog')
+  const projects = allPosts.filter((p) => p.data.type === 'project')
+  return paginate(projects.reverse(), { pageSize: siteConfig.pageSize })
 }) satisfies GetStaticPaths
 
 const { page } = Astro.props

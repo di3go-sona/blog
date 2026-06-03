@@ -1,0 +1,80 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Layout from '~/layouts/Layout.astro'
+import { SeriesGroup, TagsGroup, getSortedPosts, getPostSequenceContext } from '~/utils'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import PostAddendum from '~/components/PostAddendum.astro'
+import type { Collation } from '~/types'
+import PostDetail from '~/components/PostDetail.astro'
+
+export const getStaticPaths = (async () => {
+  const posts = await getSortedPosts('blog')
+  return posts.map((post) => {
+    const { prev, next } = getPostSequenceContext(post, posts)
+    return {
+      params: { slug: post.id },
+      props: { post, prev, next },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const { post, prev, next } = Astro.props
+const postData = post.data
+const { headings, Content: PostContent } = await render(post)
+const addendum = await getCollection('addendum')
+let AddendumContent
+let addendumAvatarImage
+if (addendum.length > 0) {
+  const addendumEntry = addendum[0]
+  const { Content } = await render(addendumEntry)
+  AddendumContent = Content
+  addendumAvatarImage = addendumEntry.data.avatarImage
+}
+
+const sortedPosts = await getSortedPosts('blog')
+const postType = postData.type || 'article'
+
+let series: Collation<any> | undefined
+let nextPostInSeries: CollectionEntry<'blog'> | undefined
+if (postData.series) {
+  const seriesGroup = await SeriesGroup.build(sortedPosts as any)
+  series = seriesGroup.match(postData.series)
+  if (!series) {
+    throw new Error(`Series "${postData.series}" not found`)
+  }
+  const sequenceContext = getPostSequenceContext(post, series.entries as any)
+  nextPostInSeries = sequenceContext.next as CollectionEntry<'blog'>
+}
+
+let tags: Collation<any>[] | undefined
+if (postData.tags && postData.tags.length > 0) {
+  const tagsGroup = await TagsGroup.build(sortedPosts as any)
+  tags = tagsGroup.matchMany(postData.tags)
+}
+---
+
+<Layout
+  title={postData.title}
+  description={postData.description}
+  author={postData.author}
+  tags={postData.tags}
+>
+  <PostDetail
+    post={post}
+    Content={PostContent}
+    headings={headings}
+    prev={prev}
+    next={next}
+    series={series}
+    nextPostInSeries={nextPostInSeries}
+    tags={tags}
+    postType={postType}
+  />
+  {
+    AddendumContent && (
+      <PostAddendum avatarImage={addendumAvatarImage}>
+        <AddendumContent />
+      </PostAddendum>
+    )
+  }
+</Layout>

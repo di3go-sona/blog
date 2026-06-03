@@ -12,15 +12,15 @@ import ScrollUpButton from './ScrollUpButton.astro'
 import ChevronsRight from '~/icons/chevrons-right.svg'
 
 interface Props {
-  post: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
+  post: CollectionEntry<'blog'>
   Content: any
   headings: any[]
-  prev?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
-  next?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
+  prev?: CollectionEntry<'blog'>
+  next?: CollectionEntry<'blog'>
   series?: Collation<any>
-  nextPostInSeries?: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
+  nextPostInSeries?: CollectionEntry<'blog'>
   tags?: Collation<any>[]
-  collectionType: 'posts' | 'articles' | 'writeups' | 'projects'
+  postType: 'article' | 'writeup' | 'project'
 }
 
 const { 
@@ -32,12 +32,12 @@ const {
   series, 
   nextPostInSeries, 
   tags,
-  collectionType
+  postType
 } = Astro.props
 
 const postData = post.data
 const showSeries = series && series.entries.length > 1
-const baseUrl = `/${collectionType}`
+const baseUrl = '/blog'
 ---
 
 <article class="max-w-full py-7.5" data-pagefind-body>

@@ -3,18 +3,18 @@ import type { GetStaticPaths } from 'astro'
 import Layout from '~/layouts/Layout.astro'
 import { getSortedPosts } from '~/utils'
 import Pagination from '~/components/Pagination.astro'
+import siteConfig from '~/site.config'
 import PostPreview from '~/components/PostPreview.astro'
 import PageHeader from '~/components/PageHeader.astro'
-import siteConfig from '~/site.config'
 
-// Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
 export const getStaticPaths = (async ({ paginate }) => {
-  const sortedPosts = await getSortedPosts('writeups')
-  return paginate(sortedPosts.reverse(), { pageSize: siteConfig.pageSize })
+  const allPosts = await getSortedPosts('blog')
+  const writeups = allPosts.filter((p) => p.data.type === 'writeup')
+  return paginate(writeups.reverse(), { pageSize: siteConfig.pageSize })
 }) satisfies GetStaticPaths
 
 const { page } = Astro.props
-const pageTitle = 'Writeups' + (page.currentPage > 1 ? ` - Page ${page.currentPage}` : '')
+const pageTitle = 'CTF Writeups' + (page.currentPage > 1 ? ` - Page ${page.currentPage}` : '')
 ---
 
 <Layout title={pageTitle} description="All writeups in the archive">

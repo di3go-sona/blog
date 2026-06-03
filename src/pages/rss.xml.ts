@@ -14,7 +14,7 @@ export async function GET(_context: AstroGlobal) {
     )
     return
   }
-  const posts = await getSortedPosts()
+  const posts = await getSortedPosts('blog')
   return rss({
     stylesheet: '/rss.xsl',
     title: siteConfig.title,
@@ -25,7 +25,7 @@ export async function GET(_context: AstroGlobal) {
       pubDate: post.data.published,
       description: post.data.description,
       author: post.data.author || siteConfig.author,
-      link: `/posts/${post.id}`,
+      link: `/blog/${post.id}`,
       content: sanitizeHtml(parser.render(post.body || ''), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
       }),

@@ -8,20 +8,16 @@ import type { Collation } from '~/types'
 import { TagsGroup } from '~/utils'
 
 interface Props {
-  post: CollectionEntry<'posts' | 'articles' | 'writeups' | 'projects'>
+  post: CollectionEntry<'blog'>
 }
 
 const { post } = Astro.props
 
-// Determine the collection type from the post
-const collectionType = 'collection' in post ? post.collection : 'posts'
-const baseUrl = `/${collectionType}`
-
-// Set emoji based on collection type
-const collectionEmoji =
-  collectionType === 'writeups'
+const postType = post.data.type || 'article'
+const typeEmoji =
+  postType === 'writeup'
     ? '🚩'
-    : collectionType === 'projects'
+    : postType === 'project'
       ? '🛠️'
       : '📄'
 
@@ -32,13 +28,14 @@ if (post.data.tags && post.data.tags.length > 0) {
   const tagsGroup = await TagsGroup.build()
   tags = tagsGroup.matchMany(post.data.tags)
 }
+const baseUrl = '/blog'
 const samePage = Astro.url.pathname === `${baseUrl}/${post.id}`
 const articleLink = samePage ? `#${post.id}` : `${baseUrl}/${post.id}`
 ---
 
 <article class="w-full py-5 my-1 md:my-4 border-accent/10">
   <h1 class="mb-3 text-2xl text-heading1 font-semibold">
-    <a href={articleLink}><span class="mr-2">{collectionEmoji}</span>{post.data.title}</a>
+    <a href={articleLink}><span class="mr-2">{typeEmoji}</span>{post.data.title}</a>
   </h1>
   <PostInfo post={post} class="mb-3 mt-4" />
   {description && <p class="pl-0.5 my-4 text-base/7 text-foreground">{description}</p>}

@@ -1,11 +1,11 @@
 import { defineCollection, z } from 'astro:content'
 import { glob } from 'astro/loaders'
 
-const postSchema = ({ image }: { image: any }) =>
+const blogSchema = ({ image }: { image: any }) =>
   z.object({
     title: z.string(),
     published: z.coerce.date(),
-    // updated: z.coerce.date().optional(),
+    type: z.enum(['article', 'writeup', 'project']).default('article'),
     draft: z.boolean().optional().default(false),
     description: z.string().optional(),
     author: z.string().optional(),
@@ -21,24 +21,9 @@ const postSchema = ({ image }: { image: any }) =>
     github: z.array(z.string()).optional().default([]),
   })
 
-const postsCollection = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/posts' }),
-  schema: postSchema,
-})
-
-const articlesCollection = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/articles' }),
-  schema: postSchema,
-})
-
-const writeupsCollection = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/writeups' }),
-  schema: postSchema,
-})
-
-const projectsCollection = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/projects' }),
-  schema: postSchema,
+const blogCollection = defineCollection({
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: './src/content/blog' }),
+  schema: blogSchema,
 })
 
 const homeCollection = defineCollection({
@@ -51,7 +36,7 @@ const homeCollection = defineCollection({
           alt: z.string().optional().default('My avatar'),
         })
         .optional(),
-      githubCalendar: z.string().optional(), // GitHub username for calendar
+      githubCalendar: z.string().optional(),
     }),
 })
 
@@ -69,10 +54,7 @@ const addendumCollection = defineCollection({
 })
 
 export const collections = {
-  posts: postsCollection,
-  articles: articlesCollection,
-  writeups: writeupsCollection,
-  projects: projectsCollection,
+  blog: blogCollection,
   home: homeCollection,
   addendum: addendumCollection,
 }
