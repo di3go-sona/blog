@@ -8,7 +8,7 @@ tags:
 
 **The day is March 28th, 2024.**
 
-I woke up, checked my phone, and noticed an unusual number of messages in the group chat—especially for a Saturday morning.
+I woke up, checked my phone, and noticed an unusual number of messages in the office chat—especially for a Saturday morning.
 
 Turns out, someone had shared an article about the `xz` library being potentially backdoored.
 
@@ -48,7 +48,7 @@ Obfuscated payload in an open source repo ? This cannot be real
 > This script is executed and, if some preconditions match, it executes the following  
 > [script](https://www.openwall.com/lists/oss-security/2024/03/29/4/1)
 
-**No. F*****ing. Way
+**No. Freakine. Way
 
 This is a textbook attack: a script whose source code is never publicly shown injects an obfuscated payload into… 🥁🥁🥁
 

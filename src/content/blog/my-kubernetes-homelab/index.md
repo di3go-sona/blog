@@ -173,13 +173,7 @@ This is the tricky part, `k0s` doesn't really provide an ansible module to creat
   run_once: true
 ```
 And here we go
-```shell
-kubectl get nodes -o wide
-NAME         STATUS   ROLES           AGE   VERSION       INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION         CONTAINER-RUNTIME
-pi-delta     Ready    control-plane   34d   v1.35.1+k0s   192.168.8.13   <none>        Debian GNU/Linux 13 (trixie)   6.12.75+rpt-rpi-2712   containerd://1.7.30
-pi-epsilon   Ready    control-plane   34d   v1.35.1+k0s   192.168.8.14   <none>        Debian GNU/Linux 13 (trixie)   6.12.75+rpt-rpi-2712   containerd://1.7.30
-pi-gamma     Ready    control-plane   34d   v1.35.1+k0s   192.168.8.15   <none>        Debian GNU/Linux 13 (trixie)   6.12.75+rpt-rpi-2712   containerd://1.7.30
-```
+![Screenshot 2026-06-20 at 18.31.01.png](./Screenshot 2026-06-20 at 18.31.01.png)
 
 The second part of the trick is that `k0s` comes with calico as default CNI provider, but I want to use cilium and have it managed by argo.
 This means we need to install `k0s` without a CNI first, bootstrap cilium trough helm, install argoCD and have it take over its own chart and the cilium one.
