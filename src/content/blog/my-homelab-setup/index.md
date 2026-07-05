@@ -21,10 +21,10 @@ Then I bought a 10” rack and some trays and I 3d printed an assembly for the R
 
 ![homelab_2.jpeg](./homelab_2.jpeg)
 
-you might think this is isn’t much computing power anyways but
+you might think this isn't much computing power anyways but
 
 1. The latest Pi is actually a surprising beast
-2. Even if it’s hard to believe, girlfriends aren’t a fan of homelabs, and this is going to be right next to our WFO office, therefore it **had** to be quiet !
+2. Even if it’s hard to believe, girlfriends aren’t a fan of homelabs, and this is going to be right next to our WFO office, therefore it **had** to be quiet!
 ### Bill Of Materials
 
 | #   | Name                                                                                                                                                                                                               | Source | Price |
@@ -60,9 +60,9 @@ The other LAN port is wired to a gigabit switch that connects the PIs, optionall
 
 ## Philosophy
 
-Given that i’ve played around with raspberry PI several time and I had them wore in a broken rather than functional state, just to lose interest and leave them lying around I decided that the setup this time should be as reproducible and self-healing as possible.
+Given that I’ve played around with raspberry PI several times and I had them worn in a broken rather than functional state, just to lose interest and leave them lying around I decided that the setup this time should be as reproducible and self-healing as possible.
 
-In order to achieve it I thought what better than use two technologies I am familiar with and I really like: `Docker` and `Ansible` and store all the code in [github](https://github.com/di3go-sona/homelab/tree/main).
+In order to achieve it I thought what better than to use two technologies I am familiar with and I really like: `Docker` and `Ansible` and store all the code in [github](https://github.com/di3go-sona/homelab/tree/main).
 
 The idea is quite easy, use ansible to configure the basic infrastructure, when possible use `Dockerfile` and `docker-compose.yml` files to ensure portability of services
 
@@ -70,7 +70,7 @@ The idea is quite easy, use ansible to configure the basic infrastructure, when 
 - setup network and mounts
 - download and setup docker
 
-For what concern the services I wanted to configure
+For what concerns the services I wanted to configure
 
 - Storage ( samba, transmission )
 - Monitoring ( grafana, prometheus, exporters )
@@ -78,17 +78,17 @@ For what concern the services I wanted to configure
 
 ## Results
 
-In the end I managed to get my new homelab running and it looks pretty cool, would I recommend it to someone else ? 
+In the end I managed to get my new homelab running and it looks pretty cool, would I recommend it to someone else? 
 
 Absolutely not
 
 ![homelab_dashbooard.png](./homelab_dashbooard.png)
 
-I thought to make this article around the lines of 'hey look how cool my homelab setup is' but it would definetely work out better as a post-mortem:
+I thought to make this article around the lines of 'hey look how cool my homelab setup is' but it would definitely work out better as a post-mortem:
 
 1. I really wanted to use my Pi 1b in this homelab so that I don't waste any of my available hardware. Well.. if you, like me, ever had the same feeling, please just trust me, don't do it:
 	- It has `armv6` CPU, good luck finding any pre-compiled binary and/or container that runs on top of it,  I had to make Dockerfiles to recompile `node_exporter` and `cadvisor` to be able to run them there
-	- Once I had those two monitoring container running I was out of clock cycles, not that I was looking to run a Minecraft server on it, but at least a samba and transmission container. I therefore had to crank scrape time down to 60s in order to run at least transmission on it
+	- Once I had those two monitoring containers running I was out of clock cycles, not that I was looking to run a Minecraft server on it, but at least a samba and transmission container. I therefore had to crank scrape time down to 60s in order to run at least transmission on it
 	- Finally, any Ansible task will just take forever, building a docker container or updating `apt` can easily take 15 minutes.. Basically increasing the total runtime of any ansible playbook tenfold.
 
 2. `Ansible` and `Docker Compose` are not really meant to run together, or at least not to use the first to run the latter, there are only 4 tasks in the docker-compose 
@@ -97,8 +97,8 @@ I thought to make this article around the lines of 'hey look how cool my homelab
 	- [docker_compose_v2_pull module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_pull_module.html#ansible-collections-community-docker-docker-compose-v2-pull-module) – Pull a Docker compose project
 	- [docker_compose_v2_run module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_run_module.html#ansible-collections-community-docker-docker-compose-v2-run-module) – Run command in a new container of a Compose service
 	
-		3 out of 4 of those modules are basically useless for our us, leaving us to do everything trough the [docker_compose_v2 module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html#ansible-collections-community-docker-docker-compose-v2-module) , that doesn't even provide an easy way to rebuild and restart on code change, driving me to write a lot of complex json querying to extract meaningful information of what to restart like 
-		`"{{ docker_compose_output.actions | map(attribute='id') | list | first }}"` and check if those are running after restart `container_info.container.State.Status != "running"`.
+		3 out of 4 of those modules are basically useless for our use, leaving us to do everything trough the [docker_compose_v2 module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html#ansible-collections-community-docker-docker-compose-v2-module) , that doesn't even provide an easy way to rebuild and restart on code change, driving me to write a lot of complex json querying to extract meaningful information of what to restart like 
+		`"{{ docker_compose_output.actions | map(attribute='id') | list | first }}"` and check if those are running after restart `container_info.container.State.Status!= "running"`.
 	Would have probably been better to use the docker modules to build and run the containers 
 
 3. Data and backups: This is an interesting part as well, I had a spare SSD lying around and I tried to plug it directly into the Pi1 or the router, but it would make the internet stutter and rpi restart. 
@@ -108,10 +108,10 @@ I thought to make this article around the lines of 'hey look how cool my homelab
    The more I progressed into it
 ### Improvements and new iteration
 
-- For the next iteration I really think is worth to ditch Docker in favor of Kubernetes, I really want to experiment around with it.
-- In order to do that I will need some additional fireopwer, so I will add 2 more Pi 5 to the Kubernetes cluster and remove the Pi 1 from it. We can use it for hardware management tasks such as
+- For the next iteration I really think is worth ditching Docker in favor of Kubernetes, I really want to experiment around with it.
+- In order to do that I will need some additional firepower, so I will add 2 more Pi 5 to the Kubernetes cluster and remove the Pi 1 from it. We can use it for hardware management tasks such as
 	- Netboot server
 	- Power management of the other Pis
 	- Connect to UART shell of other Pis
-	- Manage lights in the rack ? 
+	- Manage lights in the rack? 
 - Then setup the cluster, attach some storage and use helm to deploy services

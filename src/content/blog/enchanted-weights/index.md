@@ -26,7 +26,7 @@ tensor([[72.,  0.,  0.,  ...,  0.,  0.,  0.],
         [ 0.,  0.,  0.,  ...,  0.,  0., 95.]])
 ```
 
-there seems to be ascii caracters in all the diagonal, so I just try to print all the nonzeros
+there seem to be ASCII characters along the diagonal, so I just try to print all the nonzeros
 
 ```Python
 model['hidden.weight']

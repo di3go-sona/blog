@@ -8,7 +8,7 @@ tags:
 
 The idea behind this post was born after I attended an amazing talk by Lukasz Kaiser, one of the folks behind Attention Is All You Need.
 
-He talked about how, from the inside, the whole transformer revolution felt a lot more incremental, almost natural than what the public opinion perceived
+He talked about how, from the inside, the whole transformer revolution felt a lot more incremental, almost natural than what the public opinion perceived.
 
 Instead of trying to recap his journey, I figured I’d tell my own: how a confused uni student accidentally wandered into the world of AI.
 
@@ -20,23 +20,23 @@ My university journey began in 2016, and at that time the word AI was just very 
 
 But almost overnight, something was changing, something that would make the "fancy stats" look like ancient history.
 
-To be honest I didn’t understand much of what was going on back then, but everything makes much more sense now in hindsight, I was entering uni at the beginning of the **Deep Learning Era**. What an amazing time to be alive, right ?
+To be honest I didn’t understand much of what was going on back then, but everything makes much more sense now in hindsight, I was entering uni at the beginning of the **Deep Learning Era**. What an amazing time to be alive, right?
 
 ![llms_story_ml_trends.svg](./llms_story_ml_trends.svg)
 
-At the beginning I was just an outsider in the AI world, I was trying to figure out what the hell a python function is, and why Finite State Machines relate so closely with Regex Expression.
+At the beginning I was just an outsider in the AI world, I was trying to figure out what the hell a python function is, and why Finite State Machines relate so closely with Regex.
 
-However, even If I wasn’t involved in first person, news travel fast in the uni, and I clearly remember the fervor when [AlphaGo](https://www.deepmind.com/research/highlighted-research/alphago) defeated the world champion of Go.
+However, even if I wasn’t involved firsthand, news travels fast in the uni, and I clearly remember the fervor when [AlphaGo](https://www.deepmind.com/research/highlighted-research/alphago) defeated the world champion of Go.
 
 [https://www.youtube.com/watch?v=WXuK6gekU1Y](https://www.youtube.com/watch?v=WXuK6gekU1Y)
 
-If you didn’t watch it, I highly suggest you to the documentary that Google DeepMind released about it.
+If you didn’t watch it, I highly suggest you watch the documentary that Google DeepMind released about it.
 
 I don’t want to delve into technicalities about why this was so revolutionary, but let’s try to summarise the key points
 
   
 
-First of all, chess has already been dominated by computers for 20 years at this point in time, and it all started back in 1996, when the Chess world champion [Garry Kasparov](https://en.wikipedia.org/wiki/Garry_Kasparov) and has been defeated by IBM’s DeepBlue.
+First of all, chess has already been dominated by computers for 20 years at this point in time, and it all started back in 1996, when the Chess world champion [Garry Kasparov](https://en.wikipedia.org/wiki/Garry_Kasparov) and was defeated by IBM’s DeepBlue.
 
 > [!important] What is so different with Go then ?
 
@@ -44,19 +44,19 @@ DeepBlue was a 2-ton purpose-built supercomputer specifically tailored to explor
 
 AlphaGo was developed on commercial grade hardware - lots of it to be honest - with amateur knowledge of Go and pretty generalizable AI algorithms.
 
-At its core it was just learning by playing lots games with itself.
+At its core it was just learning by playing lots of games with itself.
 
-This apparently small difference had incredible implication
+This apparently small difference had incredible implications
 
 ![llms_history_deep_blue.jpg](./llms_history_deep_blue.jpg)
 
 First: AlphaGo wasn’t just interpolating the existing knowledge we have of the game, it was learning optimal strategies by itself, extrapolating over the small set of games that humanity has played, the entire human knowledge of Go was just a bootstrapping procedure for him, a first step to get started.
 
-This culminated in the famous Move 37 of the match with Lee Sedol, a completely unseen and un-understandable yet crushing move, that made the champion - and the rest of the Go community - realize that they’ve been playing just a bubble of what the game can offer.
+This culminated in the famous Move 37 of the match with Lee Sedol, a completely unseen and un-understandable yet crushing move, that made the champion - and the rest of the Go community - realize that they’d been playing in just a bubble of what the game can offer.
 
-Secondly, this learning algorithms are a lot more generalizable and don’t require much ( or possibly any ) domain knowledge to be effective, shortly after the release of AlphaGo, DeepMind released AlphaZero, that can be applied to any over-the-board-game ( [and not only](https://deepmind.google/technologies/alphafold/) )
+Secondly, these learning algorithms are a lot more generalizable and don’t require much ( or possibly any ) domain knowledge to be effective, shortly after the release of AlphaGo, DeepMind released AlphaZero, that can be applied to any over-the-board game ( [and not only](https://deepmind.google/technologies/alphafold/) )
 
-Thirdly, this AI algorithms are a lot more efficient than a bruteforce search, when the Chess version of AlphaZero was released, [it was crushing StockFish](https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match), the most well known chess engine ( and Deepblue’s closest living relative ) that required around 30 times more time to be competitive with its AI-based counterpart
+Thirdly, these AI algorithms are a lot more efficient than a bruteforce search, when the Chess version of AlphaZero was released, [it was crushing StockFish](https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match), the most well known chess engine ( and Deepblue’s closest living relative ) that required around 30 times more time to be competitive with its AI-based counterpart
 
 ![llms_story_stockfish_benchmark.png](./llms_story_stockfish_benchmark.png)
 
@@ -64,21 +64,21 @@ Thirdly, this AI algorithms are a lot more efficient than a bruteforce search, w
 
 The first thing that occurs to my mind when looking back at this time is probably a motto saying: GPUs, GPUs, GPUs!
 
-You could argue that this isn’t a distinctive trait of this timespan in particular, GPU race is still up and furious, and the competition for the computing resources has always being a fundamental component of AI research.
+You could argue that this isn’t a distinctive trait of this timespan in particular, GPU race is still up and furious, and the competition for the computing resources has always been a fundamental component of AI research.
 
 However the peculiarity of this time is that performant hardware for Model Training was pretty accessible, you didn’t need a multi-million dollar cluster, most people were training on one or two `980`, `1080`, `2080` and `2090` on a regular desktop, or maybe up to 8 using a server box.
 
 If compared to their commercial counterparts like `P100` and `V100` they were incredibly price-efficient, you could get an entry-level training machine for 1-2k, a mid-range for 10k and a top-tier 8 GPU box for 100k.
 
-In addition, if you were a cheap student at that time - like I was - you could always opt for running your code on Google Colab, Kaggle or any other notebook. Most of these services were giving out `GPUs` and `TPUs` for free, there were clearly lots of strings attached but It was generally feasible to rent a single GPU with somewere between 8 and 16GB of memory for a few hours, enuogh to run any uni-related experiment.
+In addition, if you were a cheap student at that time - like I was - you could always opt for running your code on Google Colab, Kaggle or any other notebook. Most of these services were giving out `GPUs` and `TPUs` for free, there were clearly lots of strings attached but it was generally feasible to rent a single GPU with somewhere between 8 and 16GB of memory for a few hours, enough to run any uni-related experiment.
 
-Yes, if you are from from US or Northern Europe it might seem cray that students din’t have access to University cluster, but that’s how it worked in my university, you’d need to be at least a contract researcher or PhD to get access to decent computational power
+Yes, if you are from the US or Northern Europe it might seem crazy that students didn’t have access to a university cluster, but that’s how it worked in my university, you’d need to be at least a contract researcher or PhD to get access to decent computational power
 
 Even though the price bracket for accelerators seem comparable to what we see today, the main difference is that with a single high-end box you could be at the forefront of research back then.
 
-To give some referece, the first Transformer from “_Attention Is all you need”_ has been trained on a few days on a `8 x P100`, in comparison the training of GPT-4 has been estimated to require around `20’000 x A100` for 3 months, we are speaking about at least 5 orders of magnitude, more than one per year.
+To give some reference, the first Transformer from “_Attention Is all you need”_ was trained in a few days on a `8 x P100`, in comparison the training of GPT-4 has been estimated to require around `20’000 x A100` for 3 months, we are speaking about at least 5 orders of magnitude, more than one per year.
 
-## \[2019→2020\] A BERT for anything and the raise of Embeddings
+## \[2019→2020\] A BERT for anything and the rise of Embeddings
 
 Everybody - well it also includes me I guess - keeps mentioning **Attention Is all you need**, but to be honest I think that for all the practitioners **BERT** was way more relevant.
 
@@ -101,7 +101,7 @@ One of the coolest tricks that I didn’t mention about BERT is its **training 
 1. **Masked Language Modeling (MLM):** Random words in a sentence are masked out, and the model is trained to predict them using the surrounding context. This forces the model to deeply understand both directions of context — what comes before and after — hence “bidirectional.”
 2. **Next Sentence Prediction (NSP):** The model is shown pairs of sentences and must predict whether the second sentence actually follows the first in the original text. This helps BERT learn relationships between sentences, which is crucial for tasks like question answering or entailment.
 
-These two **self-supervised** objective functions require minimal effort to curate the data, allowing to easily build dataset of unprecedented size with minima human overlook, for instance BERT was specifically trained on Wikipedia (~2.5B words) and Google’s BooksCorpus (~800M words).
+These two **self-supervised** objective functions require minimal effort to curate the data, allowing one to easily build datasets of unprecedented size with minimal human oversight, for instance BERT was specifically trained on Wikipedia (~2.5B words) and Google’s BooksCorpus (~800M words).
 
 This trend has been then confirmed by **the Scaling Laws paper** published by OpenAI in 2020, this paper took a bold, empirical approach to a deceptively simple question: _What happens when we just make models bigger?_ Instead of focusing on architectural tweaks or task-specific tricks, the authors studied how performance changes as you scale up **model size, dataset size, and compute** — systematically and at a massive scale.
 
@@ -111,13 +111,13 @@ This discovery had profound implications, in particular it showed that generaliz
 
 ![llms_history_gpu_meme.png](./llms_history_gpu_meme.png)
 
-This suggested a very clear path to move forward, scaling and scaling until in November 2022 GPT-3.5 and ChatGPT have been released and the mayhem happened for the following months
+This suggested a very clear path to move forward, scaling and scaling until in November 2022 GPT-3.5 and ChatGPT were released and the mayhem happened for the following months
 
 ## \[2023→2024\] Tooling and agents
 
 The years following the release of ChatGPT have been among the most incredible I’ve ever witnessed.
 
-Almost overnight, it felt like the world collectively flipped a switch. Every executive was suddenly jumping on the AI train, every company was throwing bags of money at anything with “GPT” in the name, but most importantly among us practitioners, almost nobody had a fucking clue of what was actually happening and how this things would be programmed in practice
+Almost overnight, it felt like the world collectively flipped a switch. Every executive was suddenly jumping on the AI train, every company was throwing bags of money at anything with “GPT” in the name, but most importantly among us practitioners, almost nobody had a fucking clue of what was actually happening and how these things would be programmed in practice
 
 It all stemmed from one striking realization: we suddenly had access to what I would — without hesitation — consider the closest thing we’ve seen to AGI. A single model that could perform a wide range of tasks, often with little to no explicit retraining. Ask it to summarize a paper, explain a complex theory, translate languages, generate code, or carry out a logical reasoning task — and it would _do it_. Not perfectly, but astonishingly well. And most importantly, _all with the same model_.
 
@@ -133,22 +133,22 @@ And still, many of us are trying to catch up — not just with the technology, b
 
 ## \[2025→\] Deepseek and MCP
 
-By the end of 2024 we can say that AI is becoming a commodity. Most website chatbots were finally useful - or at least they didn’t totally suck - everyone could easily generate pictures from a thought or idea and all the YC startups are trying to specialize LLMs to work on niece fields or automate the code development lifecycle even more.
+By the end of 2024 we can say that AI is becoming a commodity. Most website chatbots were finally useful - or at least they didn’t totally suck - everyone could easily generate pictures from a thought or idea and all the YC startups are trying to specialize LLMs to work on niche fields or automate the code development lifecycle even more.
 
-Everything was running smoothly for NVIDIA and OpenAI executives, sipping whiskeys, admiring their hegemony in the AI and LLM world until, all of a sudden, an unknown chinese trading firm drops **DeepSeek V3** and **R1**, respectively a foundational and reasoning model and -let me say- they definitely weren’t yet another LLM.
+Everything was running smoothly for NVIDIA and OpenAI executives, sipping whiskeys, admiring their hegemony in the AI and LLM world until, all of a sudden, an unknown Chinese trading firm drops **DeepSeek V3** and **R1**, respectively a foundational and reasoning model and -let me say- they definitely weren’t yet another LLM.
 
 ![llms_history_deepseek_benchmark.png](./llms_history_deepseek_benchmark.png)
 
-**DeepSeek R1** was competitive, if not superior, to ChatGPT-o1, openAI’s leading  
+**DeepSeek R1** was competitive, if not superior, to ChatGPT-o1, OpenAI’s leading  
 it was open-sourced from day zero and it was a lot more efficient than the rest of LLMs.  
 
-To put first in perspective, training their foundational model costed approximately $6 million, a stark contrast to the $100 million spent on training OpenAI's GPT-4 .
+To put first in perspective, training their foundational model cost approximately $6 million, a stark contrast to the $100 million spent on training OpenAI's GPT-4 .
 
 ![llms_story_nvda_stock_drop.png](./llms_story_nvda_stock_drop.png)
 
-This was an earthquake, people started to think that maybe there was another way to improve the State of Art, rather than burning even more money on hardware ( like the [Stargate](https://openai.com/index/announcing-the-stargate-project/) project ) and therefore making NVIDIA plummeting a solid 15% overnight
+This was an earthquake, people started to think that maybe there was another way to improve the State of the Art, rather than burning even more money on hardware ( like the [Stargate](https://openai.com/index/announcing-the-stargate-project/) project ) and therefore making NVIDIA plummet a solid 15% overnight
 
-The other biggest trend of 2025 ( so far ) is probably **Model Context Protocol (MCP)**, to be honest I am not particularly impressed by the protocol per-se, the first version of anything never really turns out well, there are competitors like google’s A2A and probably others lurking in the dark
+The other biggest trend of 2025 ( so far ) is probably **Model Context Protocol (MCP)**, to be honest I am not particularly impressed by the protocol per-se, the first version of anything never really turns out well, there are competitors like Google’s A2A and probably others lurking in the dark
 
 The most interesting part of MCP is the traction and the resonance it got, clearly reflecting a common desire in the AI world to standardize LLMs interactions, allowing to build even more advanced and autonomous agents, rather than constantly rebuilding the same tool and functions like it’s happening now
 

@@ -6,7 +6,7 @@ tags:
   - Homelab
 ---
 
-*A* while ago I tried to setup my kubernetes Homelab based on docker [My Homelab setup](/blog/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
+*A* while ago I tried to set up my Kubernetes Homelab based on docker [My Homelab setup](/blog/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
 
 In particular, I really wanted to throw Kubernetes into the mix, both as a learning experience and because its orchestration layer makes sense even outside the cloud native environment.
 
@@ -22,7 +22,7 @@ The first time I opted for [Raspberry Pi OS](https://www.raspberrypi.com/softw
 
 This time I looked around a bit more, someone mentioned to me [HomelabOS](https://homelabos.com) and for a moment I thought about [Flatcar](https://www.flatcar.org) but, the first comes with way too many services, whereas for the latter I am not a big fan of using immutable operating systems for home and personal use
 
-Given my appreciation for minimalism I fell in love with [DietPi](https://dietpi.com) as it comes bundled with absolutely nothing, here is how it looks out of the box. It doesn't even have an ntp daemon! ![homelab_4.png](./homelab_4.png)
+Given my appreciation for minimalism I fell in love with [DietPi](https://dietpi.com) as it comes bundled with absolutely nothing, here is how it looks out of the box. It doesn't even have an NTP daemon! ![homelab_4.png](./homelab_4.png)
 
 Also given that I have 5 SD cards to flash with some settings to customize I ended up [Writing my own RPi image flasher](/blog/writing-my-own-rpi-image-flasher).
 
@@ -31,18 +31,18 @@ The last decision is about which kubernetes distro to use, my top 3 contenders w
 - `k3s`
 - `k0s`
 
-Now `kubeadm` is an interesting option for an homelab, but the idea of having to manage all the components individually with mimimal helpers was a bit overwhelming and I was a bit concerned about performance as well/
+Now `kubeadm` is an interesting option for an homelab, but the idea of having to manage all the components individually with minimal helpers was a bit overwhelming and I was a bit concerned about performance as well.
 Second option was  `k3s`, it is super-easy to setup and works great out of the box.
-It is actually the first kubernetes distro I ever used and I now have and love-and-hate relatioship with it
+It is actually the first kubernetes distro I ever used and I now have a love-and-hate relationship with it
 - it uses sqlite instead of etcd as a default with a `kine` translation layer in between
-- it bundles internal components trough helm and an helm operator
+- it bundles internal components through helm and a helm operator
 - has an _horrendous_ option to manage helm charts from the OS, I still don't know why anyone would want to do it. You have a fully distributed and replicated databases and then you manage charts from one node. what if you put the same chart in two different nodes ? what if you have to replace one ? it just doesn't make any sense
 - it feels somewhat bloated and too custom compared to upstream k8s
-On the upside it comes with a nice ansible playbook for deployment it and an amazing 'cluster-reset' feature to reinitialize a broken cluster without losing the existing data
-The last option is `k0s`, according to the internet it should be resource 'heavier' compared to `k3s` but I didn't really notice, and I think the setup is a lot more straightforward. It comes with `k0sctl` that is an amazing tool to bootstrap a cluster ( a bit less to mantain it), the feeling in general is that is more standard and less 'bloated' than `k3s`
+On the upside it comes with a nice ansible playbook for deploying it and an amazing 'cluster-reset' feature to reinitialize a broken cluster without losing the existing data
+The last option is `k0s`, according to the internet it should be resource 'heavier' compared to `k3s` but I didn't really notice, and I think the setup is a lot more straightforward. It comes with `k0sctl` that is an amazing tool to bootstrap a cluster ( a bit less to maintain it), the feeling in general is that is more standard and less 'bloated' than `k3s`
 Finally also `k0s` has some pitfalls, the main ones are
 - the `k0s` binary starts both `etcd` and `kube-api` at the same time, now the problem is that if there is something wrong with any of the two the cluster will enter in a crashloop and is quite hard to troubleshoot. I actually managed to restore a broken `etcd` cluster by stopping the cluster and using the vanilla `etcd-server` to rebootstrap one node and then join the others, but it took me almost a full evening and I had to guess which flags did `k0s` use it to bootstrap in the same place so that when I restarted the daemon it wouldn't crash. In short, if your `etcd` goes haywire you're going to have a bad time
-- `k0sctl` doesn't work great to update existing clusters, some changes are ignored, some are done in-place, some others reset your `kubeconfig`, somewhat impredictable
+- `k0sctl` doesn't work great to update existing clusters, some changes are ignored, some are done in-place, some others reset your `kubeconfig`, somewhat unpredictable
 - additional components like `konnectivity` are not deployed as static pods like in other distros but are bundled directly inside the binary, making it harder to manage them
 - documentation is still in progress, and always feels a bit behind compared to the amount of features
 But regardless of the pitfalls I generally liked the experience and moved on with `k0s`
@@ -176,7 +176,7 @@ And here we go
 ![Screenshot 2026-06-20 at 18.31.01.png](./Screenshot 2026-06-20 at 18.31.01.png)
 
 The second part of the trick is that `k0s` comes with calico as default CNI provider, but I want to use cilium and have it managed by argo.
-This means we need to install `k0s` without a CNI first, bootstrap cilium trough helm, install argoCD and have it take over its own chart and the cilium one.
+This means we need to install `k0s` without a CNI first, bootstrap cilium through helm, install argoCD and have it take over its own chart and the cilium one.
 Bootstrapping cilium can't be skipped as argo will never be deployed otherwise as the node won't enter the Ready state and the Argo app won't be deployed on any of the nodes
 
 ```yaml

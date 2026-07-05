@@ -118,7 +118,7 @@ contract Andes {
 }
 ```
 
-However we can easily point out the nevralgic parts:
+However we can easily point out the neuralgic parts:
 
 We have a `GetFlag` method that requires the caller to have 1000 coins in the balance mapping.
 
@@ -150,11 +150,11 @@ In order to win the round we should put a bet on the correct `nextVal`, however 
   }
 ```
 
-So basically we will need to build a matrioska of Contracts in order to bypass the various checks:
+So basically we will need to build a matryoshka of Contracts in order to bypass the various checks:
 
-`extcodesize(_addr) == 0` should prevent non-human wallets, however also code in contracts contructor have the codesize set to zero.
+`extcodesize(_addr) == 0` should prevent non-human wallets, however also code in a contract's constructor has the codesize set to zero.
 
-Similarly, everytime we need to bypass a `msg.sender` we can create a child contract to use it as a proxy
+Similarly, every time we need to bypass a `msg.sender` we can create a child contract to use it as a proxy
 
 ```Solidity
 contract ExploitGrandpa{

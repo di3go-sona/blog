@@ -6,7 +6,7 @@ tags:
   - AI
 ---
 
-I’ve been using Copilot for almost three months now, and I feel confident enough to say that **it is a game-changer** indeed, but not in the way you might think !
+I’ve been using Copilot for almost three months now, and I feel confident enough to say that **it is a game-changer** indeed, but not in the way you might think!
 
 My hype curve when I first tried it on was something like this
 
@@ -14,7 +14,7 @@ My hype curve when I first tried it on was something like this
 
 ## Some examples
 
-I’ve tried it in different contexts but some of the most useful applications i found were
+I’ve tried it in different contexts but some of the most useful applications I found were
 
 - Open a csv with pandas
 
@@ -82,36 +82,36 @@ def send_to_notion(self):
             self._send_to_notion(json_properties)
 ```
 
-## What works and what doesn’t ?
+## What works and what doesn’t?
 
 When I first used Copilot I was astonished!
 
-Everything seemed so **plausible** that I just thought I could disconnect m brain, insert the autopilot and let the code flow…. unfortunately enough, I shortly realized that this approach just doesn’t work.
+Everything seemed so **plausible** that I just thought I could disconnect my brain, insert the autopilot and let the code flow…. unfortunately enough, I shortly realized that this approach just doesn’t work.
 
-The code generated with autopilot is extremely **plausible** indeed, but is **constallated of small bugs** here and there
+The code generated with autopilot is extremely **plausible** indeed, but is **constellated with small bugs** here and there
 
   
 
-**The good:** Things that work flawlessly everytime
+**The good:** Things that work flawlessly every time
 
 - **Skip trivial tasks**: Open a csv, plot a chart, insert debug logs and comments. Copilot can handle them effortlessly.
 - **Manipulating entities**: For instance inserting data into a database ( without having to write every single variable assignment for every single property in every single function ) or write a new endpoint for a web service.
-- **Expressiveness**: Suggested code is often clean and conform to linting standards, in addition it will use highly semantic names for function and variables and insert comments every couple of lines, it is very pleasant to read.
+- **Expressiveness**: Suggested code is often clean and conforms to linting standards, in addition it will use highly semantic names for functions and variables and insert comments every couple of lines, it is very pleasant to read.
 
 **The ugly**: Things that work once upon a time or require particular attention.
 
 - **Size matters**: I used copilot in different codebases and a clear pattern emerged, **completion performances strongly correlate with training data availability.**  
       
-    Therefore it works extremely well on widespread programming languages ( I tried Python and Javascript ) but rapidly decreases on marginal one ( like Svelte ) where it was simply burpling out random code, without even guessing the correct syntax  
-    Same thing happens for library it works very well with matplot and numpy, but don’t you dare try to use it on smaller libraries, it will straight out invent method names !  
+    Therefore it works extremely well on widespread programming languages ( I tried Python and Javascript ) but rapidly decreases on marginal ones ( like Svelte ) where it was simply burpling out random code, without even guessing the correct syntax  
+    Same thing happens for libraries, it works very well with matplot and numpy, but don’t you dare try to use it on smaller libraries, it will straight out invent method names!  
     
-- **Performance**: **Copilot doens’t care about performance**, you can try to direct it a little bit through comments or function naming but it’s entirely up to you
+- **Performance**: **Copilot doesn’t care about performance**, you can try to direct it a little bit through comments or function naming but it’s entirely up to you
 - **Dumbness**: Don’t count on it to perform any logical reasoning that you deem counter-intuitive. If it’s not well-known and widespread Copilot won’t help you
 
 **The bad**: Things that are often wrong, misleading or just evil
 
-- **Subtle bugs:** Copilot is so good that it can create bugs that blend so well with the code that can trick also experienced developers! Making you cry in front of the code for hours, desperatly trying to address the problem  
-    In some cases it’s just a dead end. The only way out is deleting the last 20 lines of code and start again, hoping to get in a different prediciton branch  
+- **Subtle bugs:** Copilot is so good that it can create bugs that blend so well with the code that can trick also experienced developers! Making you cry in front of the code for hours, desperately trying to address the problem  
+    In some cases it’s just a dead end. The only way out is deleting the last 20 lines of code and start again, hoping to get in a different prediction branch  
     
 - **Unsafe code**: [Research](https://arxiv.org/pdf/2204.04741.pdf) have shown that Copilot can generate unsafe code, around 30% more than a human does.  
     Copilot claims that the new Codex version improved on this error, however no formal review compared the current status-quo  
@@ -122,7 +122,7 @@ The code generated with autopilot is extremely **plausible** indeed, but is **co
     [revealing -possibly secret- portions of training data to the general public](https://www.theverge.com/2023/1/17/23558516/ai-art-copyright-stable-diffusion-getty-images-lawsuit)  
     This also happened with Copilot, in particular due to the use of private repositories during training, leading to the  
     [leakage of API secrets, endpoints, database structures and so on](https://medium.com/@jankammerath/copilot-leaks-code-i-should-not-have-seen-e4bda9b33ba6).
-- **Downskilling:** It’s still too early to be sure about code assistant effect on our coding skills, but in my opinion it’s reasonable to assume that it will have a non-negligible one.
+- **Downskilling:** It’s still too early to be sure about code assistant's effect on our coding skills, but in my opinion it’s reasonable to assume that it will have a non-negligible one.
 
 ![xai_xkcd_copilot_meme.png](./xai_xkcd_copilot_meme.png)
 
@@ -137,43 +137,43 @@ Copilot is an LLM, trained to guess the next token(s) in a sentence, so it is ba
 $$P(next\_token |context)$$
 
   
-therefore it’s performance will be infulenced by two main factors:  
+therefore its performance will be influenced by two main factors:  
 
 - **Context** Availability ( Quality of the code, verbosity, additional hints, … )
-- Similar samples in github
-- Entropy related to the choice ( is it a one-liner or a whole algorithm ?)
+- Similar samples in GitHub
+- Entropy related to the choice ( is it a one-liner or a whole algorithm?)
 
-For what concerns the **context** we can try yo model it as a 3 level memory or state.
+For what concerns the **context** we can try to model it as a 3 level memory or state.
 
 ![copilot.png](./copilot.png)
 
 - **CONTEXT**: The biggest context is the one used for training, comprising of a corpus of coding files
-- **Context**: The local context of your IDE, comprising of all the files in your projecct
+- **Context**: The local context of your IDE, comprising of all the files in your project
 - **context:** Last lines you wrote in the file: a comment or the function header
 
 For what concerns the **entropy** the question is the following:
 
-- Given the **Context** and the **context,** how many different completions do we observe in the **CONTEXT** ?
+- Given the **Context** and the **context,** how many different completions do we observe in the **CONTEXT**?
 
-Clearly, the less choices we have the better the suggested code will be !
+Clearly, the less choices we have the better the suggested code will be!
 
-## What’s under the hood ?
+## What’s under the hood?
 
 Copilot is a closed source LLM model, therefore we don’t know so much about it.
 
-According to wikipedia and a couple of brief searches I gathered the following information
+According to Wikipedia and a couple of brief searches I gathered the following information
 
 - Copilot is powered by the [OpenAI Codex](https://en.wikipedia.org/wiki/OpenAI_Codex) model
-- Codex is a refinement of GPT-3 that has been fine-tunded 54 million public GitHub repositories ( mostly of which were python-based )
+- Codex is a refinement of GPT-3 that has been fine-tuned on 54 million public GitHub repositories ( mostly of which were python-based )
 - Open AI’s GPT-3 is licensed exclusively to [Microsoft](https://en.wikipedia.org/wiki/Microsoft), GitHub’s parent company.
 
-## What’s about to come ?
+## What’s about to come?
 
 Microsoft announced [Copilot X](https://github.com/features/preview/copilot-x), aiming to extend Copilot beyond the simple next token prediction, some of the most interesting aspects I can’t wait to try are:
 
-- Chat-based interface: the new Copilot will allow developer to select code and then ask to work on it with a chat-based interface, for allowing to refactor it, generate test-cases and/or documentation
+- Chat-based interface: the new Copilot will allow developers to select code and then ask to work on it with a chat-based interface, for allowing to refactor it, generate test-cases and/or documentation
 - Automatic commit and PR description
 
-In addition they also aim to spread horizontally by integrating copilot in the command line interface.
+In addition they also aim to spread horizontally by integrating Copilot in the command line interface.
 
-Probably the day we can stop googling the correct flag placement for `tar` is closer than we expect !
+Probably the day we can stop googling the correct flag placement for `tar` is closer than we expect!

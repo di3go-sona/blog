@@ -16,7 +16,7 @@ Executing payload on 127.0.0.1
 You have been pwned!
 ```
 
-This is a very plausible exploit… too much plausible
+This is a very plausible exploit… too plausible
 
 Fortunately it’s just a CTF, so I started to look into `pytorch` source code and I found that `.pth` is basically just a wrapped `pickle`
 
@@ -58,7 +58,7 @@ def call_and_return_tracer(frame, event, arg):
 sys.settrace(call_and_return_tracer)
 ```
 
-It is a payload runner, so given that I am more a dymaic analysis kind of guy I actually replaced the tunner with a custom one that prints the decoded payload before evaluating it
+It is a payload runner, so given that I am more a dynamic analysis kind of guy I actually replaced the runner with a custom one that prints the decoded payload before evaluating it
 
 ```Python
 PAYLOAD = """

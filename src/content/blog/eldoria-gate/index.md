@@ -7,7 +7,7 @@ tags:
   - Blockchain
 ---
 
-EldoriaGate is the third blockchain challenge for HTB’s CTF, it consist of two files:  
+EldoriaGate is the third blockchain challenge for HTB’s CTF, it consists of two files:  
   
   
 
@@ -209,7 +209,7 @@ contract EldoriaGateKernel {
 }
 ```
 
-The code looks quite lenghty but the challenge is acyally pretty straightforward, the important part is
+The code looks quite lengthy but the challenge is actually pretty straightforward, the important part is
 
 ```Solidity
 
@@ -225,7 +225,7 @@ The code looks quite lenghty but the challenge is acyally pretty straightforward
     }
 ```
 
-We need to authenticate and have no village role, in order to authenticate we need to match 4 bytes that are written in a private variable, this is pretty easy as it was my first error when creating my own web3 challenge, private variables are actually posted on the network and readable by getting the bytes from an out-of-chain rcp caller, pretty easy 🤷‍♂️
+We need to authenticate and have no village role, in order to authenticate we need to match 4 bytes that are written in a private variable, this is pretty easy as it was my first error when creating my own web3 challenge, private variables are actually posted on the network and readable by getting the bytes from an out-of-chain RPC caller, pretty easy 🤷‍♂️
 
 In order to have an empty role we can use a buffer overflow from the offer value when manipulating the bytemask values in memory, in this way we can sum to the initial 0001 mask, if we sum 1111 we can obtain 10000, but given that only the first 4 bytes are read we get 0000, so an empty role
 

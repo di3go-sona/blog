@@ -11,7 +11,7 @@ github:
 
 I wanted to build my own Kubernetes Homelab, but, as in my job I deal with Bare Metal provisioning on a daily basis I felt quite stupid having to manually flash 5 images, so, instead of wasting a few hours now and then, why not _invest_ a few weeks to create my own RPi image builder.
 
-Did it save time ? Maybe, probably not yet, but it surprisingly save me a lot of time already 
+Did it save time? Maybe, probably not yet, but it surprisingly saved me a lot of time already 
 
 _But_ it also allows me to:
 - Store my OS config in a yaml file
@@ -19,16 +19,16 @@ _But_ it also allows me to:
 - Customise DietPi and other distros, flash directly from the CLI instead of clicking buttons and moving files around
 - Not being bored as all by a repetitive procedure 
 
-Did it make sense ? Time will tell, but for me it's clearly a win
+Did it make sense? Time will tell, but for me it's clearly a win
 
 ### The recon
-So how do you build an image flasher? Well, my initial concern was that you needed some kind of trickery and/or black magic to make a downloaded .img actually bootable. So I started looking around and I found this amazing post from Pascal Poerri's [post](https://www.pascalspoerri.ch/blog/2022-07-10-raspberry-pi-setup/ ) in which he explains that basically you just have to locate your device and `dd` it
+So how do you build an image flasher? Well, my initial concern was that you needed some kind of trickery and/or black magic to make a downloaded .img actually bootable. So I started looking around and I found this amazing [post] from Pascal Poerri(https://www.pascalspoerri.ch/blog/2022-07-10-raspberry-pi-setup/ ) in which he explains that basically you just have to locate your device and `dd` it
 
 ```bash
 $ sudo dd bs=1m if=2022-04-04-raspios-bullseye-arm64-lite.img of=/dev/rdisk4 status=progress
 ```
 
-that's it ? really ? `dd` is all you need ? or at least I though so
+that's it? really? `dd` is all you need? or at least I thought so
 I started to break down the problem and I realized I needed 4 steps
 - download
 - extract
@@ -37,9 +37,9 @@ I started to break down the problem and I realized I needed 4 steps
 Well it turns out that 3 out of 4 are quite easy to implement, especially with the help of Claude the hardest part was usually the progress bar.
 
 ### The implementation
-So, for the implementation iI choose python as it's the language I'm more familiar with, but maybe I golang would have been an even better idea.
+So, for the implementation I chose Python as it's the language I'm more familiar with, but maybe golang would have been an even better idea.
 The biggest part of the implementation is editing the filesystem. 
-For starters the image is `.iso`, this means that it's a byte to byte copy of a real disk
+For starters the image is `.iso`, this means that it's a byte-for-byte copy of a real disk
 
 ```bash
 $ file DietPi_RPi1-ARMv6-Trixie.img
@@ -83,9 +83,9 @@ drwxr-xr-x  4 root root 4.0K Feb  2 17:56 dietpi
 drwxr-xr-x  5 root root 4.0K Jan  1  1970 firmware
 -rw-r--r--  1 root root 9.3M Dec 18 18:17 vmlinuz-6.12.62+rpt-rpi-2712
 ```
-Now how do we modify a filesystem ? MacOS has no native support for `ext4`, I could've used FUSE, but I think that macFUSE is an awkward piece of software, and definitely not an easy dependency to package, I would like this tool to be as lightweight as possible.
-Unfortunately there is no software library to manipulate `ext4`, another alternative would be to use containers or VM, but for now the important part partition is `/boot/` that is `fat32` and is a lot easier.
-I could have extracted the partition, mounted it, edited and then copied it back in the `.iso`, but I preferred to go only software-based without going trough the OS.
+Now how do we modify a filesystem? MacOS has no native support for `ext4`, I could've used FUSE, but I think that macFUSE is an awkward piece of software, and definitely not an easy dependency to package, I would like this tool to be as lightweight as possible.
+Unfortunately there is no software library to manipulate `ext4`, another alternative would be to use containers or VM, but for now the important partition is `/boot/` that is `fat32` and is a lot easier.
+I could have extracted the partition, mounted it, edited and then copied it back in the `.iso`, but I preferred to go only software-based without going through the OS.
 
 So I will first locate the beginning of the `boot` partition
 ```python

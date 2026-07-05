@@ -60,7 +60,7 @@ contract Nile {
 }
 ```
 
-In order to solve the challenge we need to triggere the `GetFlag` event
+In order to solve the challenge we need to trigger the `GetFlag` event
 
 ```Solidity
  function getFlag(bytes32 token) public {
@@ -74,7 +74,7 @@ In order to solve the challenge we need to triggere the `GetFlag` event
 It requires two basic conditions:
 
 - being in the account mapping
-- having more than 1000 cois
+- having more than 1000 coins
 
 The first one is simply resolved by calling the `createAccount` method.  
 For the second one we are theoretically limited to withdraw at most 100 coins, however we can see that the  
@@ -104,7 +104,7 @@ What we need to do is to deploy another contract with a fallback method, and, wh
   }
 ```
 
-So the contract code perform the initial checks 11 times
+So the contract code performs the initial checks 11 times
 
 ```Solidity
 require(accounts[msg.sender]);
@@ -115,7 +115,7 @@ require(redeemable[msg.sender] > amount);
 // Loops again while Exploit.redeemed < 11
 ```
 
-And then increase the credit 11 times again
+And then increases the credit 11 times again
 
 ```Solidity
 // Executes 11 times after Exploit.redeemed >= 11

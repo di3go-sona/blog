@@ -7,7 +7,7 @@ tags:
   - Blockchain
 ---
 
-As tradition, also this year I joined Hack the Box’s CTF and this was the first blockchain
+As tradition, also this year I joined Hack the Box’s CTF and this was the first blockchain challenge
 
 ```Solidity
 // SPDX-License-Identifier: MIT
@@ -44,7 +44,7 @@ contract Eldorion {
 }
 ```
 
-Ok this is easy, basically we need to attack 3 times in the same block, trying as a regular user each transaction will also increase the block count, however a contract can call attack three times before returning, therefore ending un pt in the same transaction
+Ok this is easy, basically we need to attack 3 times in the same block, trying as a regular user each transaction will also increase the block count, however a contract can call attack three times before returning, therefore ending up in the same transaction
 
 ```Solidity
 // SPDX-License-Identifier: MIT
@@ -163,7 +163,7 @@ deployAndAttack();
 check();
 ```
 
-the hardest part was realising the last version of ether.js was bugged, same old tradition for every Blockchain CTF, double check your libraries
+the hardest part was realising the last version of ethers.js was bugged, same old tradition for every Blockchain CTF, double check your libraries
 
 ```Solidity
 HTB{w0w_tr1pl3_hit_c0mbo_ggs_y0u_defe4ted_Eld0r10n}

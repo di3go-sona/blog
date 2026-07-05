@@ -16,7 +16,7 @@ I regret to say that I never really managed to get it working properly.
 
 First, I tried NFS, as it seemed the more straightforward approach. I made it work, but not really *work*. I never managed to fix the permissions and UIDs, remount it automatically, or have it show up in the Network section, etc.
 
-Then, I tried SMB with [Samba](https://www.samba.org), so that I could make use of network discovery. Again, I made it *somewhat* work, but ended up with a mess of configurations between Docker, SMB versions, and Linux vs. Windows versions. Additionally, I had to prompt a password every time I connected to the machine.
+Then, I tried SMB with [Samba](https://www.samba.org), so that I could make use of network discovery. Again, I made it *somewhat* work, but ended up with a mess of configurations between Docker, SMB versions, and Linux vs. Windows versions. Additionally, I had to prompt for a password every time I connected to the machine.
 
 So, I went for [OMV](https://www.openmediavault.org) to have a web interface and sensible defaults. However, dedicating one node only to this always felt off.
 

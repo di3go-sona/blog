@@ -7,7 +7,7 @@ tags:
   - Blockchain
 ---
 
-HeliosDex is the second bloackchain challenge from HTB’s CyberApocaypse, this one was a funny one, three different ERC20 coins and 3 conversion function with weird roundings and a function to redeem the jackpot once you exploit the conversion error
+HeliosDex is the second blockchain challenge from HTB’s CyberApocalypse, this one was a funny one, three different ERC20 coins and 3 conversion functions with weird roundings and a function to redeem the jackpot once you exploit the conversion error
 
 ```Solidity
 // SPDX-License-Identifier: MIT
@@ -168,7 +168,7 @@ contract HeliosDEX {
 
 So this one I used chatgpt pretty much, hoping with a good enough prompt it would manage to write a workable piece of code, but it refused to spit any sensible output.
 
-I didn’t fully undersand wich value to put in order to exploit the rounding, or in which coin, so I started trying a little bit
+I didn’t fully understand which value to put in order to exploit the rounding, or in which coin, so I started trying a little bit
 
 ```Solidity
     var last_balance = await check();

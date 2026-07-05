@@ -6,7 +6,7 @@ tags:
   - Misc
 ---
 
-Even if I’m not fully into Cybersec anymore I still enjoy testing my skills with CTFs from time to time ( especially along the wonderful Hackappatoi team ) !
+Even if I’m not fully into Cybersec anymore I still enjoy testing my skills with CTFs from time to time ( especially with the wonderful Hackappatoi team ) !
 
 This challenge was quite fun and easy, you are given a simple python program that uses `pygame` to render a huge minesweeper board ( with a couple million cells )
 
@@ -14,14 +14,14 @@ In addition they also tried to force the board in a very peculiar case in which 
 
 ![ctf_2024_googlectf_minesweeper.jpeg](./ctf_2024_googlectf_minesweeper.jpeg)
 
-The two solutions I thought about where:
+The two solutions I thought about were:
 
 - Developing a custom algorithm to solve it, maybe using recursion ?
 - Using a modeling approach to translate the game to a mathematical problem
 
-Fortunately enough I immediately found this [wonderful article](https://massaioli.wordpress.com/2013/01/12/solving-minesweeper-with-matricies/) from Robert Massaioli that teaches you how to translate a minesweeper board to a system of linear equations.
+Fortunately enough I immediately found this [wonderful article](https://massaioli.wordpress.com/2013/01/12/solving-minesweeper-with-matricies/) from Robert Massaioli who teaches you how to translate a minesweeper board to a system of linear equations.
 
-Basically you need to generate an equation for each constraining cell ( the ones with numbers ) and a variable to each closed cell.
+Basically you need to generate an equation for each constraining cell ( the ones with numbers ) and a variable for each closed cell.
 
 Solving the system is then quite straightforward using `z3`
 

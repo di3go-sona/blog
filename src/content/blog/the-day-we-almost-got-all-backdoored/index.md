@@ -14,11 +14,11 @@ Turns out, someone had shared an article about the `xz` library being potentia
 
 "Yeah sure, let's have some cereal first."
 
-It’s not uncommon to see headlines about some library being potentially vulnerable. Usually, it’s just an insanely skilled researcher finding an obscure memory glitch in a semi-unkown program that _could_ be weaponized—with lots of "ifs" and a ton of work—like Spectre, Meltdown, or the recent [Apple M-series chip vulnerability](https://mashable.com/article/apple-silicon-m-series-chip-vulnerability-hackers-encryption-keys).
+It’s not uncommon to see headlines about some library being potentially vulnerable. Usually, it’s just an insanely skilled researcher finding an obscure memory glitch in a semi-unknown program that _could_ be weaponized—with lots of "ifs" and a ton of work—like Spectre, Meltdown, or the recent [Apple M-series chip vulnerability](https://mashable.com/article/apple-silicon-m-series-chip-vulnerability-hackers-encryption-keys).
 
 Still, something felt off. So I went back to my phone, opened the article, and—**wow**—things immediately looked weird.
 
-## What happened ?
+## What happened?
 
 The article included an [email](https://www.openwall.com/lists/oss-security/2024/03/29/4) from Andres Freund to oss-security, which opened in a rather straightforward way:
 
@@ -39,7 +39,7 @@ Okay Andres you got my attention, go on
 > This i**njects an obfuscated script** to be executed at the end of configure. This  
 > script is fairly obfuscated and data from "test" .xz files in the repository.  
 
-Obfuscated payload in an open source repo ? This cannot be real
+Obfuscated payload in an open source repo? This cannot be real
 
 > This injects an obfuscated script to be executed at the end of configure. This  
 > script is fairly obfuscated and data from "test" .xz files in the repository.  
@@ -48,7 +48,7 @@ Obfuscated payload in an open source repo ? This cannot be real
 > This script is executed and, if some preconditions match, it executes the following  
 > [script](https://www.openwall.com/lists/oss-security/2024/03/29/4/1)
 
-**No. Freakine. Way
+**No. Freaking. Way
 
 This is a textbook attack: a script whose source code is never publicly shown injects an obfuscated payload into… 🥁🥁🥁
 
@@ -79,13 +79,13 @@ $ xz --version
 
 oh nice, my pc is also infected… I mean, it could. At _least_ it appears that the malicious code only targets Linux
 
-## Who is behind it ?
+## Who is behind it?
 
 Okay, the story is mind-boggling. But if everything happened in plain sight, there should be traces.
 
 Apparently, Hacker News was already flooded with posts. One of the top comments:
 
-> Very annoying - the apparent author of the backdoor was in communication with me over several weeks trying to get xz 5.6.x added to Fedora 40 & 41 because of it's "great new features". We even worked with him to fix the valgrind issue (which it turns out now was caused by the backdoor he had added). We had to race last night to fix the problem after an inadvertent break of the embargo.  
+> Very annoying - the apparent author of the backdoor was in communication with me over several weeks trying to get xz 5.6.x added to Fedora 40 & 41 because of its "great new features". We even worked with him to fix the valgrind issue (which it turns out now was caused by the backdoor he had added). We had to race last night to fix the problem after an inadvertent break of the embargo.  
 > He has been part of the xz project for 2 years, adding all sorts of binary test files, and to be honest with this level of sophistication I would be suspicious of even older versions of xz until proven otherwise.  
 
 And a few comments down:
@@ -96,7 +96,7 @@ You are not alone buddy
 
 I kept on reading until I found this amazing [real-time post](https://boehs.org/node/everything-i-know-about-the-xz-backdoor) and finally a name appeared: Jia Tan a.k.a [@JiaT75](https://github.com/JiaT75)
 
-## Who is Jia Tan ?
+## Who is Jia Tan?
 
 The GitHub account had been created in 2021.
 
@@ -110,15 +110,15 @@ This was probably his debut, testing the water, but Jia Tan had his eyes on a wa
 
 He contributed to different open source projects and he became particularly active in the `xz` community.
 
-In April 2022, a sock puppet account, _Jigar Kumar_, appeared and pressured _Lasse Collin_, the maintainer of `xz` to get a new maintainer for the repo, exploiting a moment of vulnerability of the mantainer who was going trough a moment of mental fatigue
+In April 2022, a sock puppet account, _Jigar Kumar_, appeared and pressured _Lasse Collin_, the maintainer of `xz` to get a new maintainer for the repo, exploiting a moment of vulnerability of the maintainer who was going through a moment of mental fatigue
 
-And who better than Jia Tan to take over the role ?
+And who better than Jia Tan to take over the role?
 
 He was the perfect candidate, already familiar with the project, trusted by the community, the de-facto second in line
 
-Through his new position, JiaT75 systematically unraveled his their malicious plan:
+Through his new position, JiaT75 systematically unraveled their malicious plan:
 
-- Add hardware tests to the repo, increasing the amount and variety of files, making the upload of a malicious binary blob hardware to detect
+- Add hardware tests to the repo, increasing the amount and variety of files, making the upload of a malicious binary blob harder to detect
 - Migrated the testing and deployment infrastructure to a new one he owned
 - Disabling `ifunc` checks in oss-fuzz (preventing Google's automated security tests from raising alerts)
 - Update the exploit as a "test case dependency”
@@ -130,7 +130,7 @@ Through his new position, JiaT75 systematically unraveled his their malicious pl
     - Homebrew
     - [1Password](https://github.com/jamespfennell/xz/pull/2)
     - And probably several more
-- ~~Take over the world ?~~ Being exposed by someone that knows SSH so well to notice a few sub-second and decide to further investigate the matter
+- ~~Take over the world?~~ Being exposed by someone who knows SSH well enough to notice a few sub-second and decide to further investigate the matter
 
 ## Current state and final thoughts
 
@@ -144,7 +144,7 @@ I haven’t yet gone deep into what the backdoor _actually_ does, but here are
 ---
 ## Post-mortem reflections
 
-- This was close. Too close. And we can't even assume this was the first—or the last- for what is worth. It's simply the first large-scale attack **we've actually caught**.
+- This was close. Too close. And we can't even assume this was the first —or the last— for what it’s worth. It's simply the first large-scale attack **we've actually caught**.
 - It's hard to believe this was the work of a lone actor. Honestly, I wouldn’t be surprised if we’re looking at a **state-sponsored APT**.
 - This is **massive**. Everyone _knew_ something like this was possible. Now that it’s actually happened, I’m watching closely to see **how far the shockwaves travel**.
 

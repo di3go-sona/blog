@@ -74,11 +74,11 @@ contract LuckyFaucet {
 
 So, at a first glance we can withdraw at most 10M gwei, now given `1 ETH` = `10e18 Wei` we should do something in the range of `10e15` requests, not really feasible.
 
-Clearly `setBounds` is the target functions to exploit, and there is something weird with `int64` params and the mechanism as a whole.
+Clearly `setBounds` is the target function to exploit, and there is something weird with `int64` params and the mechanism as a whole.
 
 At this point I decided to query chatGPT on it, just in case
 
-> [!important] Hey chatgpt, do you see any potential bug in the code ?
+> [!important] Hey chatgpt, do you see any potential bug in the code?
 
 > Yes, there is a potential bug in the `**sendRandomETH()**` function related to the type conversion of the `**randomInt**` variable. Let me explain:
 
@@ -94,7 +94,7 @@ At this point I decided to query chatGPT on it, just in case
 
   
 
-I have to admit that chatGPT is amazing at gaslighting, everything seems to make sense even though it doesn’t really add up. However it mentions the `setBounds` functions and negative integers/modulus that is an interesting starting point.
+I have to admit that chatGPT is amazing at gaslighting, everything seems to make sense even though it doesn’t really add up. However it mentions the `setBounds` function and negative integers/modulus that is an interesting starting point.
 
 It’s not exactly how chatGPT described it, but clearly the problem is that there is no check for negative numbers and uint works with modulus.
 
@@ -104,7 +104,7 @@ It’s not exactly how chatGPT described it, but clearly the problem is that the
   require(_newLowerBound <= _newUpperBound);
 ```
 
-We need to take out around `~ 2**63 wei`, the modulus is `2**64`therefore if we manage to put a random negative number in the modulus we can expect to drain the `10 eth` in a few attempts  
+We need to take out around `~ 2**63 wei`, the modulus is `2**64`, therefore if we manage to put a random negative number in the modulus we can expect to drain the `10 eth` in a few attempts  
   
 
 ```JavaScript
