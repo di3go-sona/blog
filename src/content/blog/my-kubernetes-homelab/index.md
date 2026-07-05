@@ -1,10 +1,12 @@
 ---
 title: My Kubernetes Homelab
 published: 2026-06-03
-type: article
+type: project
 series: Homelab
 tags:
   - Homelab
+github:
+  - https://github.com/di3go-sona/homelab
 ---
 
 *A* while ago I tried to set up my Kubernetes Homelab based on docker [My Homelab setup](/blog/my-homelab-setup), it was an interesting journey for sure but there were too many issues. 
