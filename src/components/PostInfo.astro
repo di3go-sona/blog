@@ -29,34 +29,34 @@ if (seriesFrontmatter) {
 
 <div class:list={[className, 'text-foreground/80']}>
   <div class="flex flex-col gap-3">
-    <div class="flex flex-col gap-4 sm:gap-2 sm:flex-wrap items-start sm:items-center sm:flex-row">
+    <div class="shrink-0 pl-0.5 text-sm flex flex-wrap items-center gap-x-1">
+      <span>Published {dateString(post.data.published)}</span>
       {
-        series && seriesPostNumber && seriesTotal && (
-          <a
-            class="shrink-0 rounded-2xl py-[3px] px-3.5 bg-foreground/1 me-2.5 hover:bg-foreground/5 transition-colors border-1 border-foreground/16 hover:border-foreground/20"
-            href={series.url}
-          >
-            {series.title} {seriesPostNumber} / {seriesTotal}
-          </a>
+        post.data.author && (
+          <span class="before:content-['·'] before:font-bold before:inline-block before:mx-0.5">
+            {post.data.author}
+          </span>
         )
       }
-      <div class="shrink-0 pl-0.5 text-sm flex flex-wrap items-center gap-x-1">
-        <span>Published {dateString(post.data.published)}</span>
-        {
-          post.data.author && (
-            <span class="before:content-['·'] before:font-bold before:inline-block before:mx-0.5">
-              {post.data.author}
-            </span>
-          )
-        }
-        {
-          minutesRead && (
-            <span class="before:content-['·'] before:inline-block before:mx-0.5">
-              {minutesRead}
-            </span>
-          )
-        }
-      </div>
+      {
+        minutesRead && (
+          <span class="before:content-['·'] before:inline-block before:mx-0.5">
+            {minutesRead}
+          </span>
+        )
+      }
+      {
+        series && seriesPostNumber && seriesTotal && (
+          <span class="before:content-['·'] before:inline-block before:mx-0.5">
+            <a
+              class="underline underline-offset-2 hover:text-foreground transition-colors"
+              href={series.url}
+            >
+              {series.title} {seriesPostNumber} / {seriesTotal}
+            </a>
+          </span>
+        )
+      }
     </div>
     {
       tags && tags.length > 0 && (
