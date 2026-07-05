@@ -7,9 +7,9 @@ githubCalendar: 'stelcodes'
 
 Hi, I'm Diego
 
-I am a SRE @ [Nebul](https://nebul.com)
+I am a SRE @ [Nebul](https://nebul.com) where I work at the intersection of AI, Kubernetes and Linux Infrastructures.
 
-I work with Kubernetes and Linux Infrastructures and I enjoy tinkering with RPis,Arduinos, 3d printing and hacking CTFs.
+At home I enjoy tinkering with RPis, ESPs, 3d printing and CTFs.
 
-In my spare time I like bouldering 🧗, reading 📖 (mostly non-fiction) and cooking 🍳.
+In my spare time I like bouldering 🧗, riding my motorbike 🏍️ and trying out new recipes 🍳.
 
