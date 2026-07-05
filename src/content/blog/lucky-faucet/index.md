@@ -2,6 +2,7 @@
 title: Lucky Faucet
 published: 2024-03-16
 type: writeup
+series: CyberApocalypse 2024
 tags:
   - Blockchain
 ---

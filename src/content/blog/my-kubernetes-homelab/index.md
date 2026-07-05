@@ -2,6 +2,7 @@
 title: My Kubernetes Homelab
 published: 2026-06-03
 type: article
+series: Homelab
 tags:
   - Homelab
 ---

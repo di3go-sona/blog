@@ -2,6 +2,7 @@
 title: Mine the gap
 published: 2023-06-30
 type: writeup
+series: GoogleCTF 2023
 tags:
   - Misc
 ---
