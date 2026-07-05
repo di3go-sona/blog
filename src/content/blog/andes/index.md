@@ -3,6 +3,7 @@ title: Andes
 published: 2022-11-11
 type: writeup
 series: LakeCTF 2022
+part: 2
 tags:
   - Blockchain
 ---

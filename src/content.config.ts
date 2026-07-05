@@ -10,6 +10,7 @@ const blogSchema = ({ image }: { image: any }) =>
     description: z.string().optional(),
     author: z.string().optional(),
     series: z.string().optional(),
+    part: z.number().optional(),
     tags: z.array(z.string()).optional().default([]),
     coverImage: z
       .strictObject({

@@ -221,7 +221,12 @@ export async function getSortedPosts(
     return import.meta.env.PROD ? data.draft !== true : true
   })
   const sortedPosts = allPosts.sort((a, b) => {
-    return a.data.published < b.data.published ? -1 : 1
+    if (a.data.published < b.data.published) return -1
+    if (a.data.published > b.data.published) return 1
+    // Same date — use part as tiebreaker if available
+    const aPart = a.data.part ?? Infinity
+    const bPart = b.data.part ?? Infinity
+    return aPart - bPart
   })
   return sortedPosts
 }

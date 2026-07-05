@@ -3,6 +3,7 @@ title: Crystal Corruption
 published: 2025-04-02
 type: writeup
 series: CyberApocalypse 2025
+part: 5
 tags:
   - AI
 ---

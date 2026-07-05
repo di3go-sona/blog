@@ -3,6 +3,7 @@ title: Eldoria Gate
 published: 2025-04-03
 type: writeup
 series: CyberApocalypse 2025
+part: 4
 tags:
   - Blockchain
 ---

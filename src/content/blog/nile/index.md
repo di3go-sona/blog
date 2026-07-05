@@ -3,6 +3,7 @@ title: Nile
 published: 2022-11-11
 type: writeup
 series: LakeCTF 2022
+part: 1
 tags:
   - Blockchain
 ---
