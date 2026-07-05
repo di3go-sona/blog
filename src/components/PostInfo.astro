@@ -2,14 +2,17 @@
 import { dateString, SeriesGroup } from '~/utils'
 import { render, type CollectionEntry } from 'astro:content'
 import type { Collation } from '~/types'
+import IconGithub from '~/icons/github.svg'
+import IconGitlab from '~/icons/gitlab.svg'
 
 interface Props {
   post: CollectionEntry<'blog'>
   tags?: Collation<any>[]
+  showPills?: boolean
   class?: string
 }
 
-const { post, tags, class: className } = Astro.props
+const { post, tags, showPills = true, class: className } = Astro.props
 const { remarkPluginFrontmatter } = await render(post)
 const { minutesRead } = remarkPluginFrontmatter
 const seriesFrontmatter = post.data.series
@@ -24,6 +27,22 @@ if (seriesFrontmatter) {
   }
   seriesPostNumber = series.entries.findIndex((p: any) => p.id === post.id) + 1
   seriesTotal = series.entries.length
+}
+
+const githubLinks = post.data.github ?? []
+
+function repoName(url: string): string {
+  try {
+    const u = new URL(url)
+    const parts = u.pathname.replace(/\.git$/, '').split('/').filter(Boolean)
+    return parts.slice(-2).join('/')
+  } catch {
+    return url
+  }
+}
+
+function isGitlab(url: string): boolean {
+  return url.includes('gitlab.com')
 }
 ---
 
@@ -59,21 +78,47 @@ if (seriesFrontmatter) {
       }
     </div>
     {
-      tags && tags.length > 0 && (
-        <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm items-baseline">
-          <dt class="font-medium pt-1">Tags:</dt>
-          <dd class="flex flex-wrap gap-3">
-            {tags.map((tag) => (
-              <a
-                href={tag.url}
-                class="py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
-              >
-                {tag.title}
-              </a>
-            ))}
-          </dd>
+      showPills && ((tags && tags.length > 0) || githubLinks.length > 0) ? (
+        <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm items-center">
+          {tags && tags.length > 0 && (
+            <>
+              <dt class="font-medium pt-1">Tags:</dt>
+              <dd class="flex flex-wrap gap-3">
+                {tags.map((tag) => (
+                  <a
+                    href={tag.url}
+                    class="py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
+                  >
+                    {tag.title}
+                  </a>
+                ))}
+              </dd>
+            </>
+          )}
+          {githubLinks.length > 0 && (
+            <>
+              <dt class="font-medium pt-1">Repos:</dt>
+              <dd class="flex flex-wrap gap-3">
+                {githubLinks.map((url) => {
+                  const gitlab = isGitlab(url)
+                  const Icon = gitlab ? IconGitlab : IconGithub
+                  return (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors text-sm"
+                    >
+                      <Icon class="size-4" />
+                      {repoName(url)}
+                    </a>
+                  )
+                })}
+              </dd>
+            </>
+          )}
         </dl>
-      )
+      ) : null
     }
   </div>
 </div>

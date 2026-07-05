@@ -1,5 +1,7 @@
 ---
 import IconChevronsRight from '~/icons/chevrons-right.svg'
+import IconGithub from '~/icons/github.svg'
+import IconGitlab from '~/icons/gitlab.svg'
 import type { CollectionEntry } from 'astro:content'
 import { render } from 'astro:content'
 import Tags from '~/components/Tags.astro'
@@ -28,6 +30,18 @@ if (post.data.tags && post.data.tags.length > 0) {
   const tagsGroup = await TagsGroup.build()
   tags = tagsGroup.matchMany(post.data.tags)
 }
+const githubLinks = post.data.github ?? []
+
+function repoName(url: string): string {
+  try {
+    const u = new URL(url)
+    const parts = u.pathname.replace(/\.git$/, '').split('/').filter(Boolean)
+    return parts.slice(-2).join('/')
+  } catch {
+    return url
+  }
+}
+
 const baseUrl = '/blog'
 const samePage = Astro.url.pathname === `${baseUrl}/${post.id}`
 const articleLink = samePage ? `#${post.id}` : `${baseUrl}/${post.id}`
@@ -37,13 +51,28 @@ const articleLink = samePage ? `#${post.id}` : `${baseUrl}/${post.id}`
   <h1 class="mb-3 text-2xl text-heading1 font-semibold">
     <a href={articleLink}><span class="mr-2">{typeEmoji}</span>{post.data.title}</a>
   </h1>
-  <PostInfo post={post} class="mb-3 mt-4" />
+  <PostInfo post={post} showPills={false} class="mb-3 mt-4" />
   {
-    tags && (
-      <div class="mb-6">
-        <Tags tags={tags} />
+    (tags && tags.length > 0) || githubLinks.length > 0 ? (
+      <div class="mb-6 flex flex-wrap gap-3 text-sm">
+        {tags && <Tags tags={tags} />}
+        {githubLinks.map((url) => {
+          const gitlab = url.includes('gitlab.com')
+          const Icon = gitlab ? IconGitlab : IconGithub
+          return (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 py-1 px-3 bg-accent/1 hover:bg-accent/8 border-1 border-accent/20 text-accent/90 rounded-2xl transition-colors"
+            >
+              <Icon class="size-4" />
+              {repoName(url)}
+            </a>
+          )
+        })}
       </div>
-    )
+    ) : null
   }
   {description && <p class="pl-0.5 my-4 text-base/7 text-foreground">{description}</p>}
   <div>
