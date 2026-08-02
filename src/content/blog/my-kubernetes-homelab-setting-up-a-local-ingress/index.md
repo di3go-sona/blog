@@ -11,24 +11,15 @@ github:
 
 In the [previous article](https://di3go.sona.dev/blog/my-kubernetes-homelab) we went through the process of setting up a k0s cluster on a bunch of Raspberry Pis.
 
-At the end of that article the cluster was up and running, but we had no way of actually accessing our services from the outside. In this article we'll fix that by setting up local DNS, TLS certificates and a proper ingress.
-
-The goal is simple: I want to type `argo.patat.in` in my browser and get my ArgoCD dashboard, with a valid TLS certificate, without any port forwarding or VPN shenanigans.
+At the end of that article the cluster was up and running, but the internet was just a quick-n-dirty cilium configuration, but that's not enough I want a way to create LoadBalancers, Ingresses and TLS: the whole shebang !
 
 ## The problem
 
-If you recall from the previous article, Cilium is configured with an ingress controller in shared load-balancer mode, pinned to IP `192.168.8.20` via LBIPAM.
+If you recall from the previous article, we configured Cilium to provide LoadBalanced IPs trough ARP announcements, and configured an ingress controller pinned to IP `192.168.8.20` via LBIPAM.
 
 This means that all HTTP/HTTPS traffic to the cluster flows through that single IP, and Cilium takes care of routing it to the right service based on the Host header.
 
-What we're missing is:
-- **DNS**: something that maps `*.patat.in` to `192.168.8.20` so that devices on the LAN can reach the ingress
-- **TLS**: valid certificates so that browsers don't scream at us
-- **A way to distribute the TLS secret** to all the namespaces where we have Ingress resources
-
-## Cilium ingress controller
-
-In the previous article we installed Cilium as our CNI, but we also configured it to act as an ingress controller and L2 load balancer. Let me quickly recap the relevant parts.
+Let's do a small recap: this is the configuration to achieve that
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -96,7 +87,7 @@ spec:
 
 The key parameters here are:
 - `ingressController.enabled: true` turns on Cilium's built-in ingress controller, so we don't need nginx-ingress or traefik
-- `ingressController.loadbalancerMode: shared` means all Ingress resources share a single LoadBalancer Service instead of getting one each, which is much lighter on resources
+- `ingressController.loadbalancerMode: shared` means all Ingress resources share a single LoadBalancer Service instead of getting one each, this is what you normally want
 - `ingressController.service.annotations.lbipam...: "192.168.8.20"` pins the shared LoadBalancer to a specific IP via LBIPAM
 - `l2announcements.enabled: true` makes LoadBalancer IPs ARP-visible on the LAN, so devices can reach `192.168.8.20` without any manual ARP configuration
 - `cni.exclusive: false` allows Multus to coexist with Cilium (more on that later)
@@ -130,6 +121,8 @@ spec:
 The `CiliumLoadBalancerIPPool` defines the range of IPs that can be assigned to LoadBalancer services (`192.168.8.20` through `192.168.8.29`), and the `CiliumL2AnnouncementPolicy` tells Cilium to announce those IPs via ARP/NDP on `eth0`.
 
 The result is that `192.168.8.20` is now a reachable IP on the LAN, and any traffic hitting it gets routed by Cilium's ingress controller based on the Host header.
+
+What are we missing now ? We have host based routing on the ingress at `192.168.8.20` so, how are we going to resolve our hostnames ? 
 
 ## Local DNS with dnsmasq
 
@@ -188,7 +181,7 @@ For TLS certificates we'll use Let's Encrypt, but since our ingress is on a priv
 
 The domain `patat.in` is managed in Cloudflare, and we need to create an API token that cert-manager can use to create TXT records for the `_acme-challenge` subdomain.
 
-![kubernetes_network_3.png](./kubernetes_network_3.png)
+
 
 ![kubernetes_network_4.png](./kubernetes_network_4.png)
 
@@ -197,8 +190,10 @@ The domain `patat.in` is managed in Cloudflare, and we need to create an API tok
 ![kubernetes_network_2.png](./kubernetes_network_2.png)
 
 ![616](./kubernetes_network_1.png)
+Now I will go back to goDaddy, update the DNS record on goDaddy and here we go, we have our Cloudflare-managed hostname
+![Screenshot 2026-08-02 at 11.20.14.png](./Screenshot 2026-08-02 at 11.20.14.png)
 
-The token needs `Zone:DNS:Edit` permissions on the zone for `patat.in`.
+The only thing we need now it to create a token needs `Zone:DNS:Edit` permissions on the zone for `patat.in`.
 
 Once we have the token, we create a Kubernetes secret in the `cert-manager` namespace:
 
