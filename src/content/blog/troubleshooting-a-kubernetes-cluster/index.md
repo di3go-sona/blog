@@ -9,6 +9,7 @@ tags:
   - Troubleshooting
 github:
   - https://github.com/di3go-sona/homelab
+draft: true
 ---
 
 **The day is August 2nd, 2026.**
